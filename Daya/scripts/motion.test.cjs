@@ -17,7 +17,10 @@ const media = {
     changes.push(callback);
   },
 };
-w.matchMedia = () => media;
+w.matchMedia = (query) =>
+  query.includes("prefers-reduced-motion")
+    ? media
+    : { matches: false, addEventListener() {} };
 const observations = [];
 w.IntersectionObserver = class {
   constructor(callback) {

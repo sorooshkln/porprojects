@@ -243,6 +243,7 @@
       track.addEventListener("daya:refresh", () => this.refresh());
       track.addEventListener("daya:go", (event) => this.go(event.detail.index));
       track.addEventListener("keydown", (event) => {
+        if (this.staticLayout) return;
         const index = keyIndex(event, this.index, this.count);
         if (index !== null) {
           event.preventDefault();
@@ -350,6 +351,29 @@
     measure() {
       if (!this.items || this.busy) return;
       // Restore canonical DOM order when crossing a responsive breakpoint.
+      const mobile = matchMedia("(max-width: 600px)").matches;
+      this.staticLayout = mobile && this.track.matches(".style-grid");
+      this.hold("mobile-manual", mobile && !this.latest);
+      if (this.staticLayout) {
+        this.cancel();
+        if (
+          this.items.some((item, index) => this.track.children[index] !== item)
+        )
+          this.track.append(...this.items);
+        this.track.scrollLeft = 0;
+        this.overflow = false;
+        this.index = 0;
+        this.positions = this.items.length ? [0] : [];
+        this.count = this.positions.length;
+        this.tools.hidden = true;
+        this.track.removeAttribute("tabindex");
+        this.root.removeAttribute("aria-roledescription");
+        this.update();
+        this.schedule();
+        return;
+      }
+      this.track.tabIndex = 0;
+      this.root.setAttribute("aria-roledescription", "اسلایدر");
       const overflow = this.track.scrollWidth > this.track.clientWidth + 2;
       if (overflow !== this.overflow) {
         this.cancel();
@@ -532,12 +556,13 @@
     const open = !!document.querySelector("dialog[open]");
     controllers.forEach((controller) => controller.hold("dialog", open));
   };
-  const dialog = document.querySelector("dialog");
-  if (dialog)
-    new MutationObserver(syncModal).observe(dialog, {
+  const dialogObserver = new MutationObserver(syncModal);
+  document.querySelectorAll("dialog").forEach((dialog) =>
+    dialogObserver.observe(dialog, {
       attributes: true,
       attributeFilter: ["open"],
-    });
+    }),
+  );
   syncModal();
   reduced.addEventListener("change", () =>
     controllers.forEach((controller) => {

@@ -202,12 +202,12 @@ function renderProducts() {
   track.innerHTML = visible
     .map(
       (p) => `<article class="product-card" data-id="${p.id}">
-    <button class="product-picture" data-product="${p.id}" aria-label="مشاهدهٔ ${p.alt}" style="--image-width:${p.width}px;--image-height:${p.height}px;--image-top:${p.top}px;--image-left:${p.left}px">
+    <button class="product-picture" data-product="${p.id}" aria-label="مشاهدهٔ ${p.alt}" style="--image-width:${p.width}px;--image-height:${p.height}px;--image-top:${p.top}px;--image-left:${p.left}px;--image-w:${(p.width / (p.collection === "best" ? 298 : 287)) * 100}%;--image-h:${(p.height / 320) * 100}%;--image-x:${(p.left / (p.collection === "best" ? 298 : 287)) * 100}%;--image-y:${(p.top / 320) * 100}%">
       <img class="product-image" src="./assets/images/${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy">
       <span class="sizes" aria-label="سایزهای موجود">${p.sizes.map((size) => `<span class="size-chip">${size}</span>`).join("")}</span>
       ${p.discount ? '<span class="discount">۴۲٪</span>' : ""}<span class="stock">۱۰ عدد موجود</span>
     </button>
-    <div class="product-info"><button class="product-title" data-product="${p.id}">${p.title}</button><div class="product-pricing"><span class="old-price"><del>۴,۶۸۷,۰۰۰</del><span class="currency">تومان</span></span><span class="price">۲,۶۸۷,۰۰۰<span class="currency">تومان</span></span></div></div>
+    <div class="product-info"><button class="product-title" data-product="${p.id}"><span class="desktop-product-name">${p.title}</span><span class="mobile-product-name">${p.alt}</span></button><span class="mobile-product-origin" lang="en" dir="ltr">${p.id === "trousers" ? "Made In India" : "Original"}</span><div class="product-pricing"><span class="old-price"><del>۴,۶۸۷,۰۰۰</del><span class="currency">تومان</span></span><span class="price">۲,۶۸۷,۰۰۰<span class="currency">تومان</span></span></div></div>
   </article>`,
     )
     .join("");
@@ -316,7 +316,7 @@ function renderBestsellers() {
   document.querySelector("#bestseller-grid").innerHTML = selected
     .map(
       (p) =>
-        `<article class="bestseller-card" data-id="${p.id}"><button class="product-picture" data-product="${p.id}" aria-label="مشاهدهٔ ${p.alt}" style="--image-width:${p.width}px;--image-height:${p.height}px;--image-top:${p.top}px;--image-left:${p.left}px"><img class="product-image" src="./assets/images/${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy">${p.discount ? '<span class="discount">۱۰٪</span>' : ""}${p.id === "best-bag" ? '<span class="best-brand" lang="en" dir="ltr">superdry</span>' : ""}</button><div class="product-info"><button class="product-title" data-product="${p.id}">${p.title}</button><div class="product-pricing"><span class="old-price"><del>۴,۶۸۷,۰۰۰</del><span class="currency">تومان</span></span><span class="price">۲,۶۸۷,۰۰۰<span class="currency">تومان</span></span></div></div></article>`,
+        `<article class="bestseller-card" data-id="${p.id}"><button class="product-picture" data-product="${p.id}" aria-label="مشاهدهٔ ${p.alt}" style="--image-width:${p.width}px;--image-height:${p.height}px;--image-top:${p.top}px;--image-left:${p.left}px;--image-w:${(p.width / (p.collection === "best" ? 298 : 287)) * 100}%;--image-h:${(p.height / 320) * 100}%;--image-x:${(p.left / (p.collection === "best" ? 298 : 287)) * 100}%;--image-y:${(p.top / 320) * 100}%"><img class="product-image" src="./assets/images/${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy">${p.discount ? '<span class="discount">۱۰٪</span>' : ""}${p.id === "best-bag" ? '<span class="best-brand" lang="en" dir="ltr">superdry</span>' : ""}</button><div class="product-info"><button class="product-title" data-product="${p.id}"><span class="desktop-product-name">${p.title}</span><span class="mobile-product-name">${p.alt}</span></button><span class="mobile-product-origin" lang="en" dir="ltr">${p.id === "trousers" ? "Made In India" : "Original"}</span><div class="product-pricing"><span class="old-price"><del>۴,۶۸۷,۰۰۰</del><span class="currency">تومان</span></span><span class="price">۲,۶۸۷,۰۰۰<span class="currency">تومان</span></span></div></div></article>`,
     )
     .join("");
   document

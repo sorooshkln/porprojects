@@ -9,7 +9,10 @@ const dom = new JSDOM(fs.readFileSync(root + "/index.html", "utf8"), {
 });
 const w = dom.window,
   d = w.document;
-w.matchMedia = () => ({ matches: true, addEventListener() {} });
+w.matchMedia = (query) => ({
+  matches: query.includes("prefers-reduced-motion"),
+  addEventListener() {},
+});
 w.HTMLElement.prototype.scrollIntoView = function () {};
 w.HTMLElement.prototype.scrollTo = function (options) {
   this.scrollLeft = options.left;

@@ -17,8 +17,10 @@
     />
     <link rel="preload" href="./assets/images/hero-models.webp" as="image" />
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/mobile.css" />
     <script src="./app.js" defer></script>
     <script src="./assets/scripts/motion.js" defer></script>
+    <script src="./assets/scripts/mobile.js" defer></script>
   </head>
   <body>
     <svg
@@ -82,15 +84,52 @@
             d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4c0 2-2 3-4 2C9 19 5 15 3 7c-1-2 0-4 2-4Z"
           />
         </symbol>
+        <symbol id="i-diamond" viewBox="0 0 24 24">
+          <path d="m3 8 4-5h10l4 5-9 13L3 8Zm0 0h18M7 3l5 18 5-18" />
+        </symbol>
+        <symbol id="i-book" viewBox="0 0 24 24">
+          <path
+            d="M3 4h7l2 2 2-2h7v16h-7l-2 2-2-2H3V4Zm9 2v16M6 8h3m6 0h3M6 12h3m6 0h3"
+          />
+        </symbol>
+        <symbol id="i-whatsapp" viewBox="0 0 24 24">
+          <path d="M4 17 3 22l5-2a9 9 0 1 0-4-3Z" />
+          <path
+            d="m8 7 2 3-1 1 4 4 1-1 3 1c0 3-3 3-5 2-3-1-6-4-6-7 0-2 0-3 2-3Z"
+          />
+        </symbol>
+        <symbol id="i-threads" viewBox="0 0 24 24">
+          <path
+            d="M20 8c-1-4-4-6-8-6C5 2 3 6 3 12s3 10 9 10c5 0 9-3 9-7 0-5-4-7-8-7-4 0-6 2-6 5s2 4 4 4c4 0 6-3 6-6 0-4-2-6-5-6"
+          />
+        </symbol>
       </defs>
     </svg>
     <a class="skip-link" href="#products">رفتن به محصولات</a>
     <header class="site-header">
-      <a class="sale-strip" href="#products"
-        ><span>شروع تخفیف&nbsp;&nbsp; بهاره&nbsp; دایامد</span
-        ><svg class="icon"><use href="#i-left" /></svg
-      ></a>
+      <div class="announcement">
+        <a class="sale-strip" href="#products"
+          ><span>شروع تخفیف&nbsp;&nbsp; بهاره&nbsp; دایامد</span
+          ><svg class="icon"><use href="#i-left" /></svg
+        ></a>
+        <button class="announcement-close" aria-label="بستن اعلان تخفیف">
+          <svg class="icon"><use href="#i-close" /></svg>
+        </button>
+      </div>
       <div class="header-main container">
+        <button
+          class="mobile-menu-toggle"
+          aria-label="بازکردن منو"
+          aria-expanded="false"
+          aria-controls="mobile-menu-dialog"
+        >
+          <svg class="icon"><use href="#i-menu" /></svg></button
+        ><a
+          class="mobile-contact"
+          href="tel:+98212541478"
+          aria-label="تماس با دایامد"
+          ><svg class="icon"><use href="#i-phone" /></svg
+        ></a>
         <form class="search" role="search">
           <label class="sr-only" for="product-search">جستجو محصول</label
           ><input
@@ -184,6 +223,9 @@
                 width="132"
                 height="40"
               />
+              <span class="mobile-brand" lang="en" dir="ltr"
+                >Superdry &amp; Co</span
+              >
               <h1>دقیق تر ، جسور تر ، ماجراجور تر</h1>
               <a class="ticket-link" href="#products"
                 >مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg
@@ -215,6 +257,9 @@
                 width="132"
                 height="40"
               />
+              <span class="mobile-brand" lang="en" dir="ltr"
+                >Superdry &amp; Co</span
+              >
               <h2>به وقت خرید کت کژوال</h2>
               <button class="ticket-link" data-category="classic">
                 مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg>
@@ -246,6 +291,9 @@
                 width="132"
                 height="40"
               />
+              <span class="mobile-brand" lang="en" dir="ltr"
+                >Superdry &amp; Co</span
+              >
               <h2>به وقت خرید کفش‌های اسپرت و ورزشی</h2>
               <button class="ticket-link" data-category="sport">
                 مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg>
@@ -399,6 +447,9 @@
           </button>
         </div>
         <div class="promo-copy promo-copy-left">
+          <span class="mobile-brand" lang="en" dir="ltr"
+            >Superdry &amp; Co</span
+          >
           <h2>به وقت خرید کت کژوال</h2>
           <p>کالکشن های جدید‍ کت تک</p>
           <button class="ticket-link" data-category="classic">
@@ -417,6 +468,9 @@
           <h2 id="bestsellers-heading">
             پرفروشترین محصولات<svg class="icon" aria-hidden="true">
               <use href="#i-spark" />
+            </svg>
+            <svg class="icon mobile-heading-icon" aria-hidden="true">
+              <use href="#i-diamond" />
             </svg>
           </h2>
           <div
@@ -527,6 +581,9 @@
           <h2 id="magazine-heading">
             آخرین های دایامگ<svg class="icon" aria-hidden="true">
               <use href="#i-spark" />
+            </svg>
+            <svg class="icon mobile-heading-icon" aria-hidden="true">
+              <use href="#i-book" />
             </svg>
           </h2>
           <span class="heading-rule"></span
@@ -728,8 +785,18 @@
         <div class="footer-content">
           <div class="footer-nav-columns">
             <nav aria-label="منوی سایت">
-              <h2>منو سایت<span></span></h2>
-              <div class="footer-link-grid">
+              <h2>
+                <button
+                  class="footer-disclosure"
+                  aria-expanded="true"
+                  aria-controls="footer-links-0"
+                >
+                  منو سایت<span class="footer-chevron" aria-hidden="true"
+                    >⌃</span
+                  >
+                </button>
+              </h2>
+              <div class="footer-link-grid" id="footer-links-0">
                 <a href="./">صفحه اصلی</a
                 ><a href="#categories">دسته بندی محصولات</a
                 ><a href="#footer-contact">تماس با ما</a
@@ -737,8 +804,20 @@
               </div>
             </nav>
             <nav aria-label="خرید بر اساس دسته بندی">
-              <h2>خرید بر اساس دسته بندی<span></span></h2>
-              <div class="footer-link-grid">
+              <h2>
+                <button
+                  class="footer-disclosure"
+                  aria-expanded="true"
+                  aria-controls="footer-links-1"
+                >
+                  خرید بر اساس دسته بندی<span
+                    class="footer-chevron"
+                    aria-hidden="true"
+                    >⌃</span
+                  >
+                </button>
+              </h2>
+              <div class="footer-link-grid" id="footer-links-1">
                 <button data-audience="women">زنانه</button
                 ><button data-audience="men">مردانه</button
                 ><button data-audience="kids">بچه گانه</button
@@ -747,8 +826,18 @@
               </div>
             </nav>
             <nav aria-label="راهنمای مشتریان">
-              <h2>راهنمای مشتریان<span></span></h2>
-              <div class="footer-link-grid">
+              <h2>
+                <button
+                  class="footer-disclosure"
+                  aria-expanded="true"
+                  aria-controls="footer-links-2"
+                >
+                  راهنمای مشتریان<span class="footer-chevron" aria-hidden="true"
+                    >⌃</span
+                  >
+                </button>
+              </h2>
+              <div class="footer-link-grid" id="footer-links-2">
                 <button data-open="cart">سبد خرید</button
                 ><button data-open="account">حساب کاربری</button
                 ><button data-open="branches">شعب دایامد</button
@@ -804,9 +893,13 @@
                 <svg class="icon" aria-hidden="true">
                   <use href="#i-telegram" />
                 </svg></button
+              ><button data-social="تردز" aria-label="تردز">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-threads" />
+                </svg></button
               ><button data-social="واتساپ" aria-label="واتساپ">
                 <svg class="icon" aria-hidden="true">
-                  <use href="#i-phone" />
+                  <use href="#i-whatsapp" />
                 </svg>
               </button>
             </div>
@@ -814,6 +907,28 @@
         </div>
       </div>
     </footer>
+    <dialog id="mobile-menu-dialog" aria-labelledby="mobile-menu-heading">
+      <div class="dialog-header">
+        <h2 id="mobile-menu-heading">منوی دایامد</h2>
+        <button class="mobile-menu-close" aria-label="بستن منو">
+          <svg class="icon"><use href="#i-close" /></svg>
+        </button>
+      </div>
+      <div class="mobile-menu-search"></div>
+      <nav aria-label="منوی موبایل">
+        <a href="./">صفحه اصلی</a
+        ><button data-category="all">همه محصولات</button
+        ><button data-category="classic">کلاسیک و رسمی</button
+        ><button data-category="sport">اسپرت و ورزشی</button
+        ><button data-category="casual">روزمره و راحتی</button
+        ><button data-audience="kids">بچگانه</button
+        ><button data-open="cart">
+          سبد خرید <span class="mobile-cart-count"></span></button
+        ><button data-open="account">حساب کاربری</button
+        ><a href="#magazine">دایا مگ</a><a href="#faq">سوالات متداول</a
+        ><a href="#footer-contact">تماس با ما</a>
+      </nav>
+    </dialog>
     <dialog id="detail-dialog" aria-labelledby="dialog-heading">
       <div class="dialog-header">
         <h2 id="dialog-heading"></h2>
