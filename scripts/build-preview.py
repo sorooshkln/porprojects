@@ -18,7 +18,7 @@ css = re.sub(r"url\('([^']+)'\)", lambda match: "url('" + data_uri(match[1]) + "
 js = (root / 'app.js').read_text()
 # Resolve the one image path selected at runtime by the product template.
 js = js.replace("assets/design-top/product-${p.sale?'wave':'heart'}.webp", "${p.sale?'" + data_uri('assets/design-top/product-wave.webp') + "':'" + data_uri('assets/design-top/product-heart.webp') + "'}")
-js = re.sub(r'assets/design-(?:top|part2)/[\w-]+\.webp', lambda match: data_uri(match[0]), js)
+js = re.sub(r'assets/design-(?:top|part\d+)/[\w-]+\.(?:webp|svg)', lambda match: data_uri(match[0]), js)
 html = (root / 'index.html').read_text()
 html = re.sub(r'src="(assets/[^\"]+)"', lambda match: 'src="' + data_uri(match[1]) + '"', html)
 html = html.replace('<link rel="stylesheet" href="style.css">', '<style>' + css + '</style>')

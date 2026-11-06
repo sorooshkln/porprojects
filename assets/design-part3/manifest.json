@@ -1,0 +1,38 @@
+[
+  {
+    "node": "8:1848",
+    "name": "gold-bar-classic",
+    "width": 103,
+    "height": 103
+  },
+  {
+    "node": "8:1872",
+    "name": "gold-bar-patterned",
+    "width": 103,
+    "height": 103
+  },
+  {
+    "node": "8:1644",
+    "name": "bracelet-banner",
+    "width": 548,
+    "height": 160
+  },
+  {
+    "node": "8:1652",
+    "name": "diamond-banner",
+    "width": 548,
+    "height": 160
+  },
+  {
+    "node": "8:810",
+    "name": "avatar-peach",
+    "width": 40,
+    "height": 40
+  },
+  {
+    "node": "8:570",
+    "name": "avatar-orange",
+    "width": 40,
+    "height": 40
+  }
+]
