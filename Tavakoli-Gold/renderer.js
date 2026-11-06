@@ -2,6 +2,10 @@
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const rgba = c => `rgba(${Math.round(c.r*255)},${Math.round(c.g*255)},${Math.round(c.b*255)},${c.a ?? 1})`;
 export const matrix = t => `matrix(${t.join(',')})`;
+// Figma glyph blobs can start with a close-path sentinel before the first
+// move. SVG requires its first command to be moveto; Chromium rejects the
+// entire path otherwise. A close before any subpath has no geometry to close.
+export const normalizePath = d => d.replace(/^(?:\s*[zZ])+\s*/, '').trim();
 export function artwork(n, prefix) {
   if(n.type === 'TEXT' && !n.glyphs?.length) return '';
   let defs = '', body = '', seq = 0;
@@ -56,5 +60,5 @@ export function createNode(n, prefix, document) {
   return el;
 }
 export function definitions(paths) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="path-library" aria-hidden="true"><defs>${Object.entries(paths).map(([id,d])=>`<path id="path-${id}" d="${esc(d)}"/>`).join('')}</defs></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="path-library" aria-hidden="true"><defs>${Object.entries(paths).map(([id,d])=>`<path id="path-${id}" d="${esc(normalizePath(d))}"/>`).join('')}</defs></svg>`;
 }

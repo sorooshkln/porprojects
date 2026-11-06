@@ -10,6 +10,6 @@
     "dev": "node scripts/live-server.mjs",
     "start": "node scripts/live-server.mjs",
     "check": "node --check app.js && node --check renderer.js && node --check design.js && node --check scripts/live-server.mjs",
-    "test": "node scripts/smoke-test.mjs"
+    "test": "node scripts/renderer-test.mjs && node scripts/smoke-test.mjs"
   }
 }
