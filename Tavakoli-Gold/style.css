@@ -35,3 +35,5 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 .blog-arrow{position:absolute;top:78px;width:34px;height:34px;display:grid;place-items:center;border:1px solid #ded8ce;border-radius:50%;background:#fff;color:#756b59;font:20px Doran;z-index:2;box-shadow:0 2px 8px #26242012}
 .blog-previous{right:-14px}.blog-next{left:-14px}
 .blog-mobile{height:240px}.blog-mobile .blog-track{gap:16px;padding-bottom:10px}.blog-mobile .blog-card{flex-basis:274px}.blog-mobile .blog-card-action img{height:154px}.blog-mobile .blog-card-title{font-size:14px;line-height:24px;padding:8px 10px 0}.blog-mobile .blog-card-meta{font-size:11px;line-height:20px;padding:4px 10px 8px}.blog-mobile .blog-arrow{top:65px;width:30px;height:30px}.blog-mobile .blog-previous{right:-12px}.blog-mobile .blog-next{left:-12px}
+
+.gold-rate-display{display:flex;align-items:center;justify-content:flex-start;direction:rtl;width:100%;height:100%;font-size:20px;font-weight:800;line-height:24px;white-space:nowrap}

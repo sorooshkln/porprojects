@@ -1,5 +1,6 @@
 import {createNode, definitions} from './renderer.js';
 const design=window.TAVAKOLI_DESIGN;
+const GOLD_RATE_TOMAN=25_000_000;
 const stage=document.querySelector('#design-stage');
 document.body.insertAdjacentHTML('afterbegin',definitions(design.paths));
 const panel=document.querySelector('#panel'), title=document.querySelector('#panel-title'), body=document.querySelector('#panel-body');
@@ -94,6 +95,11 @@ function installMobileNavigation(){
 }
 // These sections span the viewport while product cards keep their content width.
 function installPageAdjustments(){
+ const rate=stage.querySelector('[data-node="11:437"]');
+ if(rate){
+  const value=document.createElement('span');value.className='gold-rate-display';value.textContent=number(GOLD_RATE_TOMAN)+' تومان';
+  rate.replaceChildren(value);rate.style.width='176px';rate.style.transform='translate(1187px,61px)';
+ }
  for(const id of ['11:621','11:624','11:912'])stage.querySelector(`[data-node="${id}"]`)?.remove();
  const mobile=currentMode==='mobile';
  stage.querySelector(`[data-node="${mobile?'11:1239':'11:529'}"]`)?.remove();
