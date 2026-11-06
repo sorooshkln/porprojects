@@ -2277,3 +2277,483 @@ dialog::backdrop {
 .site-footer {
   margin-top: -8px;
 }
+/* Shared motion controls keep the Figma card sizes and RTL reading direction. */
+.hero-slides {
+  position: absolute;
+  inset: 0;
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.65s ease,
+    visibility 0.65s;
+}
+.hero-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.hero-photo-slide {
+  width: 100%;
+  max-width: none;
+}
+.hero-slide-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+.hero-photo-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, #ffffffdf, transparent 70%);
+}
+.hero-photo-slide .hero-copy {
+  right: max(var(--gutter), calc((100% - 1312px) / 2));
+}
+.hero-copy h2 {
+  font:
+    600 32px/48px Abar,
+    sans-serif;
+  margin: 8px 0 0 auto;
+  max-width: 333px;
+}
+.hero-controls {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 4;
+  direction: rtl;
+}
+.hero-controls .hero-dots {
+  position: static;
+  transform: none;
+  display: flex;
+  direction: rtl;
+  padding: 0;
+  gap: 0;
+}
+.hero-dots button {
+  width: 24px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.hero-dots button::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #77787e66;
+  transition:
+    width 0.25s,
+    background 0.25s;
+}
+.hero-dots button[aria-current="true"]::before {
+  width: 18px;
+  background: var(--black);
+}
+.hero-next,
+.hero-previous {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.hero-next .icon {
+  transform: none;
+}
+.hero-previous .icon {
+  transform: rotate(180deg);
+}
+.hero-play,
+.motion-play {
+  min-width: 44px;
+  height: 40px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.hero-play:disabled,
+.motion-play:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.hero {
+  touch-action: pan-y;
+}
+.hero-fade {
+  pointer-events: none;
+}
+.hero-models,
+.hero-slide-photo,
+.motion-track img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.hero-slide.is-active .hero-copy {
+  animation: hero-copy-enter 0.65s ease both;
+}
+@keyframes hero-copy-enter {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.motion-track {
+  position: relative;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.motion-track::-webkit-scrollbar {
+  display: none;
+}
+.motion-track:focus-visible {
+  outline-offset: 5px;
+}
+.motion-track.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+  scroll-snap-type: none;
+}
+.motion-track.is-dragging * {
+  cursor: grabbing;
+}
+.motion-ghost {
+  z-index: 1;
+  flex-shrink: 0;
+}
+.motion-tools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  margin-top: 18px;
+  direction: rtl;
+}
+.motion-tools > button {
+  min-width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.motion-tools .motion-previous .icon {
+  transform: rotate(180deg);
+}
+.motion-dots {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  direction: rtl;
+}
+.motion-dots button {
+  width: 24px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.motion-dots button::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #77787e66;
+  transition:
+    width 0.25s,
+    background 0.25s;
+}
+.motion-dots button[aria-current="true"]::before {
+  width: 18px;
+  background: var(--black);
+}
+.latest-motion-tools {
+  margin-top: 0;
+  height: 0;
+  position: relative;
+  top: 22px;
+}
+.latest-motion-tools > .motion-previous,
+.latest-motion-tools > .motion-next {
+  display: none;
+}
+.latest-motion-tools .motion-play {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.bestseller-grid.motion-track,
+.style-grid.motion-track,
+.magazine-grid.motion-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  gap: 40px;
+}
+.bestseller-grid.motion-track > .bestseller-card,
+.magazine-grid.motion-track > .article-card {
+  flex: 0 0 calc((100% - 120px) / 4);
+  scroll-snap-align: start;
+}
+.style-grid.motion-track {
+  gap: 27px;
+}
+.style-grid.motion-track > .style-card {
+  flex: 0 0 calc((100% - 81px) / 4);
+  scroll-snap-align: start;
+}
+.category-image img,
+.style-card > img,
+.article-image img {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.3s;
+}
+.product-picture {
+  transition: filter 0.3s;
+}
+@media (hover: hover) {
+  .category-card:hover .category-image img,
+  .style-card:hover > img,
+  .article-card > button:hover img {
+    transform: scale(1.035);
+  }
+  .product-picture:hover {
+    filter: brightness(0.975);
+  }
+}
+.faq summary span {
+  transition: transform 0.25s ease;
+}
+.faq details[open] p {
+  animation: fade-in 0.25s ease both;
+}
+dialog[open] {
+  animation: dialog-in 0.22s ease-out both;
+}
+.toast:not([hidden]) {
+  animation: dialog-in 0.2s ease-out both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal-section.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 1200px) {
+  .bestseller-grid.motion-track,
+  .magazine-grid.motion-track {
+    gap: 24px;
+  }
+  .bestseller-grid.motion-track > .bestseller-card,
+  .magazine-grid.motion-track > .article-card {
+    flex-basis: calc((100% - 72px) / 4);
+  }
+  .style-grid.motion-track {
+    gap: 20px;
+  }
+  .style-grid.motion-track > .style-card {
+    flex-basis: calc((100% - 60px) / 4);
+  }
+  .hero-copy h2 {
+    font-size: 28px;
+    line-height: 44px;
+  }
+}
+@media (max-width: 900px) {
+  .bestseller-grid.motion-track > .bestseller-card,
+  .magazine-grid.motion-track > .article-card {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+  .style-grid.motion-track > .style-card {
+    flex-basis: calc((100% - 20px) / 2);
+  }
+  .hero-copy h2 {
+    font-size: 25px;
+  }
+  .hero-controls {
+    bottom: 4px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-controls {
+    bottom: 0;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .hero-slide .hero-copy {
+    bottom: 44px;
+  }
+  .hero-photo-slide .hero-copy {
+    right: 20px;
+    left: 20px;
+  }
+  .hero-photo-slide .hero-photo-shade {
+    background: linear-gradient(transparent 30%, #fff 80%);
+  }
+  .hero-copy h2 {
+    font-size: 24px;
+    line-height: 36px;
+    max-width: none;
+    margin: 8px 0 0;
+  }
+  .hero-slide-photo {
+    object-position: 42% top;
+  }
+  .hero-photo-slide .superdry-logo {
+    background: #ffffff70;
+  }
+  .bestseller-grid.motion-track {
+    gap: 16px;
+  }
+  .bestseller-grid.motion-track > .bestseller-card {
+    flex-basis: min(260px, calc(100vw - 64px));
+    min-width: 220px;
+  }
+  .style-grid.motion-track,
+  .magazine-grid.motion-track {
+    gap: 16px;
+  }
+  .style-grid.motion-track > .style-card,
+  .magazine-grid.motion-track > .article-card {
+    flex-basis: calc((100% - 16px) / 2);
+  }
+  .motion-tools {
+    gap: 4px;
+    margin-top: 12px;
+  }
+  .latest-motion-tools {
+    margin-top: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide,
+  .hero-slide .hero-copy,
+  .category-image img,
+  .style-card > img,
+  .article-image img,
+  .product-picture,
+  .hero-dots button::before,
+  .motion-dots button::before,
+  .faq summary span,
+  .reveal-section {
+    transition: none !important;
+    animation: none !important;
+  }
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+  }
+  dialog[open],
+  .faq details[open] p,
+  .toast:not([hidden]) {
+    animation: none !important;
+  }
+}
+
+/* Controls use existing inter-section space rather than changing section heights. */
+.bestsellers,
+.style-collections,
+.magazine {
+  position: relative;
+}
+.motion-tools {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+.latest-motion-tools {
+  top: auto;
+  left: auto;
+  right: 48px;
+  bottom: 37px;
+  transform: none;
+  width: 44px;
+  height: 40px;
+}
+.latest-motion-tools .motion-play {
+  position: static;
+}
+@media (max-width: 1200px) {
+  .latest-motion-tools {
+    right: 32px;
+  }
+}
+@media (max-width: 600px) {
+  .motion-tools {
+    bottom: -46px;
+    height: 40px;
+  }
+  .latest-motion-tools {
+    right: 16px;
+    bottom: 13px;
+  }
+}
+.products-section > .previous {
+  left: auto;
+  right: 26px;
+}
+.products-section > .next {
+  right: auto;
+  left: 31px;
+}
+.products-section > .previous .icon {
+  transform: rotate(180deg);
+}
+.products-section > .next .icon {
+  transform: none;
+}
+@media (max-width: 1200px) {
+  .products-section > .previous {
+    right: 15px;
+  }
+  .products-section > .next {
+    left: 15px;
+  }
+}
+@media (max-width: 600px) {
+  .products-section > .previous {
+    right: 3px;
+  }
+  .products-section > .next {
+    left: 3px;
+  }
+}

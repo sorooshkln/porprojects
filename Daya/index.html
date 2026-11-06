@@ -18,6 +18,7 @@
     <link rel="preload" href="./assets/images/hero-models.webp" as="image" />
     <link rel="stylesheet" href="./style.css" />
     <script src="./app.js" defer></script>
+    <script src="./assets/scripts/motion.js" defer></script>
   </head>
   <body>
     <svg
@@ -156,35 +157,111 @@
     <main>
       <section class="hero" aria-label="مجموعهٔ Superdry">
         <div class="hero-background" aria-hidden="true"></div>
-        <div class="hero-inner container">
-          <div class="hero-art">
-            <span class="hero-wordmark" lang="en" dir="ltr">Superdry</span
-            ><img
-              class="hero-models"
-              src="./assets/images/hero-models.webp"
-              alt="مجموعهٔ جدید سوپردرای، لباس‌های روزمره در رنگ‌های خنثی"
-              width="589"
-              height="544"
-              fetchpriority="high"
-            />
+        <div class="hero-slides">
+          <div
+            class="hero-slide hero-inner container is-active"
+            data-slide="0"
+            role="group"
+            aria-roledescription="اسلاید"
+            aria-label="۱ از ۳"
+          >
+            <div class="hero-art">
+              <span class="hero-wordmark" lang="en" dir="ltr">Superdry</span
+              ><img
+                class="hero-models"
+                src="./assets/images/hero-models.webp"
+                alt="مجموعهٔ جدید سوپردرای، لباس‌های روزمره در رنگ‌های خنثی"
+                width="589"
+                height="544"
+                fetchpriority="high"
+              />
+            </div>
+            <div class="hero-copy">
+              <img
+                class="superdry-logo"
+                src="./assets/images/superdry-logo.svg"
+                alt="Superdry"
+                width="132"
+                height="40"
+              />
+              <h1>دقیق تر ، جسور تر ، ماجراجور تر</h1>
+              <a class="ticket-link" href="#products"
+                >مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg
+              ></a>
+            </div>
           </div>
-          <div class="hero-copy">
+          <div
+            class="hero-slide hero-inner container hero-photo-slide"
+            data-slide="1"
+            role="group"
+            aria-roledescription="اسلاید"
+            aria-label="2 از ۳"
+            aria-hidden="true"
+            inert
+          >
             <img
-              class="superdry-logo"
-              src="./assets/images/superdry-logo.svg"
-              alt="Superdry"
-              width="132"
-              height="40"
+              class="hero-slide-photo"
+              src="./assets/images/promo-jacket.webp"
+              alt="به وقت خرید کت کژوال"
+              width="1302"
+              height="700"
             />
-            <h1>دقیق تر ، جسور تر ، ماجراجور تر</h1>
-            <a class="ticket-link" href="#products"
-              >مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg
-            ></a>
+            <div class="hero-photo-shade"></div>
+            <div class="hero-copy">
+              <img
+                class="superdry-logo"
+                src="./assets/images/superdry-logo.svg"
+                alt="Superdry"
+                width="132"
+                height="40"
+              />
+              <h2>به وقت خرید کت کژوال</h2>
+              <button class="ticket-link" data-category="classic">
+                مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="hero-slide hero-inner container hero-photo-slide"
+            data-slide="2"
+            role="group"
+            aria-roledescription="اسلاید"
+            aria-label="3 از ۳"
+            aria-hidden="true"
+            inert
+          >
+            <img
+              class="hero-slide-photo"
+              src="./assets/images/promo-shoes.webp"
+              alt="به وقت خرید کفش‌های اسپرت و ورزشی"
+              width="1302"
+              height="700"
+            />
+            <div class="hero-photo-shade"></div>
+            <div class="hero-copy">
+              <img
+                class="superdry-logo"
+                src="./assets/images/superdry-logo.svg"
+                alt="Superdry"
+                width="132"
+                height="40"
+              />
+              <h2>به وقت خرید کفش‌های اسپرت و ورزشی</h2>
+              <button class="ticket-link" data-category="sport">
+                مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg>
+              </button>
+            </div>
           </div>
         </div>
         <div class="hero-fade" aria-hidden="true"></div>
-        <div class="hero-dots" aria-hidden="true">
-          <span></span><span></span><span class="active"></span>
+        <div class="hero-controls">
+          <button class="hero-previous" aria-label="اسلاید قبلی">
+            <svg class="icon"><use href="#i-left" /></svg>
+          </button>
+          <div class="hero-dots" aria-label="انتخاب اسلاید"></div>
+          <button class="hero-next" aria-label="اسلاید بعدی">
+            <svg class="icon"><use href="#i-left" /></svg></button
+          ><button class="hero-play" aria-label="توقف پخش خودکار">توقف</button>
         </div>
       </section>
       <section

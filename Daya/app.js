@@ -242,6 +242,7 @@ function renderProducts() {
     )
     .join("");
   track.scrollLeft = 0;
+  track.dispatchEvent(new Event("daya:refresh"));
 }
 function resetFilters() {
   category = "all";
@@ -257,49 +258,11 @@ function scrollToProducts() {
   });
 }
 function moveTo(index) {
-  if (!visible.length) return;
-  current = (index + visible.length) % visible.length;
-  if (track.scrollWidth <= track.clientWidth + 1) {
-    const cards = [...track.children];
-    const ordered = [...visible.slice(current), ...visible.slice(0, current)];
-    track.replaceChildren(
-      ...ordered.map((p) => cards.find((card) => card.dataset.id === p.id)),
-    );
-    updateDots(current);
-    return;
-  }
-  const cards = [...track.children];
-  // RTL scroll positions use negative offsets in standards-compliant browsers.
-  const right = cards[0].offsetLeft + cards[0].offsetWidth;
-  const targetRight = cards[current].offsetLeft + cards[current].offsetWidth;
-  track.scrollTo({
-    left: -(right - targetRight),
-    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? "instant"
-      : "smooth",
-  });
-  updateDots(current);
+  track.dispatchEvent(new CustomEvent("daya:go", { detail: { index } }));
 }
-function updateDots(index) {
-  document
-    .querySelectorAll("#product-pagination button")
-    .forEach((button, i) =>
-      button.setAttribute("aria-current", String(i === index)),
-    );
-}
-track.addEventListener(
-  "scroll",
-  () => {
-    if (!track.children.length) return;
-    const bounds = track.getBoundingClientRect();
-    const distances = [...track.children].map((card) =>
-      Math.abs(card.getBoundingClientRect().right - bounds.right),
-    );
-    current = distances.indexOf(Math.min(...distances));
-    updateDots(current);
-  },
-  { passive: true },
-);
+track.addEventListener("daya:position", (event) => {
+  current = event.detail.index;
+});
 function openDialog(title, html) {
   document.querySelector("#dialog-heading").textContent = title;
   content.innerHTML = html;
@@ -356,6 +319,9 @@ function renderBestsellers() {
         `<article class="bestseller-card" data-id="${p.id}"><button class="product-picture" data-product="${p.id}" aria-label="مشاهدهٔ ${p.alt}" style="--image-width:${p.width}px;--image-height:${p.height}px;--image-top:${p.top}px;--image-left:${p.left}px"><img class="product-image" src="./assets/images/${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy">${p.discount ? '<span class="discount">۱۰٪</span>' : ""}${p.id === "best-bag" ? '<span class="best-brand" lang="en" dir="ltr">superdry</span>' : ""}</button><div class="product-info"><button class="product-title" data-product="${p.id}">${p.title}</button><div class="product-pricing"><span class="old-price"><del>۴,۶۸۷,۰۰۰</del><span class="currency">تومان</span></span><span class="price">۲,۶۸۷,۰۰۰<span class="currency">تومان</span></span></div></div></article>`,
     )
     .join("");
+  document
+    .querySelector("#bestseller-grid")
+    .dispatchEvent(new Event("daya:refresh"));
   document.querySelector("#best-empty").hidden = selected.length !== 0;
   document.querySelector("#bestseller-grid").hidden = selected.length === 0;
   document
@@ -549,13 +515,11 @@ document
         .join(""),
     ),
   );
-document
-  .querySelector("#back-to-top")
-  .addEventListener("click", () =>
-    window.scrollTo({
-      top: 0,
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-    }),
-  );
+document.querySelector("#back-to-top").addEventListener("click", () =>
+  window.scrollTo({
+    top: 0,
+    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "instant"
+      : "smooth",
+  }),
+);
