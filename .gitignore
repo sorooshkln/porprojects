@@ -1,0 +1,4 @@
+# Generated standalone preview; rebuild with python3 scripts/build-preview.py
+preview.html
+__pycache__/
+*.pyc
