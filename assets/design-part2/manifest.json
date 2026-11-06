@@ -1,0 +1,104 @@
+[
+  {
+    "node": "4:3804",
+    "name": "story-1",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3809",
+    "name": "story-2",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3814",
+    "name": "story-3",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3819",
+    "name": "story-4",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3824",
+    "name": "story-5",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3829",
+    "name": "story-6",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3834",
+    "name": "story-7",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3839",
+    "name": "story-8",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3844",
+    "name": "story-9",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:3851",
+    "name": "story-10",
+    "width": 70,
+    "height": 70
+  },
+  {
+    "node": "4:4026",
+    "name": "shop-hoor",
+    "width": 149.3333282470703,
+    "height": 97
+  },
+  {
+    "node": "4:4030",
+    "name": "shop-dargoune",
+    "width": 149.33334350585938,
+    "height": 97
+  },
+  {
+    "node": "4:4034",
+    "name": "shop-doris",
+    "width": 149.33334350585938,
+    "height": 97
+  },
+  {
+    "node": "4:4038",
+    "name": "shop-mavi",
+    "width": 149.33334350585938,
+    "height": 97
+  },
+  {
+    "node": "4:4042",
+    "name": "shop-mio",
+    "width": 149.33334350585938,
+    "height": 97
+  },
+  {
+    "node": "4:4046",
+    "name": "shop-kia",
+    "width": 149.33334350585938,
+    "height": 97
+  },
+  {
+    "node": "4:3789",
+    "name": "investment-banner",
+    "width": 1120,
+    "height": 180
+  }
+]
