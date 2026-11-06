@@ -1,18 +1,279 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="پروژهٔ Daya">
-  <title>Daya</title>
-  <link rel="stylesheet" href="./style.css">
-  <script src="./app.js" defer></script>
-</head>
-<body>
-  <main>
-    <p class="brand" lang="en" dir="ltr">Daya</p>
-    <h1>شروع دایا</h1>
-    <p>محتوا و طراحی این صفحه پس از دریافت داده‌ها و فونت‌های پروژه تکمیل می‌شود.</p>
-  </main>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="دایامد؛ مجموعهٔ پوشاک کلاسیک، روزمره و ورزشی و جدیدترین‌های Superdry"
+    />
+    <title>دایامد | Daya</title>
+    <link
+      rel="preload"
+      href="./assets/fonts/Dana-FaNum-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="preload" href="./assets/images/hero-models.webp" as="image" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <svg
+      class="icon-definitions"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <symbol id="i-search" viewBox="0 0 24 24">
+          <circle cx="10.8" cy="10.8" r="6.8" />
+          <path d="m16 16 4.5 4.5" />
+        </symbol>
+        <symbol id="i-user" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="3.5" />
+          <path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2" />
+        </symbol>
+        <symbol id="i-bag" viewBox="0 0 24 24">
+          <path d="M5 7h14l1 14H4L5 7Z" />
+          <path d="M8.5 9V6a3.5 3.5 0 0 1 7 0v3" />
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </symbol>
+        <symbol id="i-left" viewBox="0 0 24 24">
+          <path d="m14 6-6 6 6 6" />
+        </symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path d="M20 12H4m6-6-6 6 6 6" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="i-spark" viewBox="0 0 32 40">
+          <path
+            d="M16 0C16 14 11 20 0 20c11 0 16 6 16 20 0-14 5-20 16-20C21 20 16 14 16 0Z"
+            fill="currentColor"
+            stroke="none"
+          />
+        </symbol>
+      </defs>
+    </svg>
+    <a class="skip-link" href="#products">رفتن به محصولات</a>
+    <header class="site-header">
+      <a class="sale-strip" href="#products"
+        ><span>شروع تخفیف&nbsp;&nbsp; بهاره&nbsp; دایامد</span
+        ><svg class="icon"><use href="#i-left" /></svg
+      ></a>
+      <div class="header-main container">
+        <form class="search" role="search">
+          <label class="sr-only" for="product-search">جستجو محصول</label
+          ><input
+            id="product-search"
+            type="search"
+            placeholder="جستجو محصول"
+            autocomplete="off"
+          /><button aria-label="جستجو">
+            <svg class="icon"><use href="#i-search" /></svg>
+          </button>
+        </form>
+        <a class="logo" href="./" aria-label="صفحهٔ اصلی دایامد"
+          ><img
+            src="./assets/images/daya-logo.webp"
+            alt="DAYAMODE"
+            width="100"
+            height="68"
+        /></a>
+        <div class="header-actions">
+          <button class="account-button" data-open="account">
+            <svg class="icon"><use href="#i-user" /></svg
+            ><span>حساب کاربری</span>
+          </button>
+          <button class="cart-button" data-open="cart">
+            <svg class="icon"><use href="#i-bag" /></svg><span>سبد خرید</span
+            ><span id="cart-count" class="cart-count">۰</span>
+          </button>
+        </div>
+        <img
+          class="header-spark"
+          src="./assets/images/sparkle.svg"
+          alt=""
+          width="40"
+          height="44"
+        />
+      </div>
+      <nav class="navigation" aria-label="منوی اصلی">
+        <div class="nav-inner">
+          <div class="category-menu">
+            <button
+              id="category-toggle"
+              aria-expanded="false"
+              aria-controls="category-dropdown"
+            >
+              <svg class="icon"><use href="#i-menu" /></svg>دسته بندی محصولات
+            </button>
+            <div id="category-dropdown" class="dropdown" hidden>
+              <button data-category="classic">کلاسیک و رسمی</button
+              ><button data-category="sport">اسپرت و ورزشی</button
+              ><button data-category="casual">روزمره و راحتی</button
+              ><button data-category="kids">بچگانه</button
+              ><button data-category="all">همه محصولات</button>
+            </div>
+          </div>
+          <button data-audience="women">زنانه</button
+          ><button data-audience="men">مردانه</button
+          ><button data-audience="kids">بچگانه</button>
+          <span class="nav-divider" aria-hidden="true"></span>
+          <button data-open="magazine">دایا مگ</button
+          ><button data-open="contact">تماس با ما</button
+          ><button data-open="about">درباره ما</button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" aria-label="مجموعهٔ Superdry">
+        <div class="hero-background" aria-hidden="true"></div>
+        <div class="hero-inner container">
+          <div class="hero-art">
+            <span class="hero-wordmark" lang="en" dir="ltr">Superdry</span
+            ><img
+              class="hero-models"
+              src="./assets/images/hero-models.webp"
+              alt="مجموعهٔ جدید سوپردرای، لباس‌های روزمره در رنگ‌های خنثی"
+              width="589"
+              height="544"
+              fetchpriority="high"
+            />
+          </div>
+          <div class="hero-copy">
+            <img
+              class="superdry-logo"
+              src="./assets/images/superdry-logo.svg"
+              alt="Superdry"
+              width="132"
+              height="40"
+            />
+            <h1>دقیق تر ، جسور تر ، ماجراجور تر</h1>
+            <a class="ticket-link" href="#products"
+              >مشاهده محصولات<svg class="icon"><use href="#i-arrow" /></svg
+            ></a>
+          </div>
+        </div>
+        <div class="hero-fade" aria-hidden="true"></div>
+        <div class="hero-dots" aria-hidden="true">
+          <span></span><span></span><span class="active"></span>
+        </div>
+      </section>
+      <section class="categories container" aria-label="دسته‌بندی‌های پوشاک">
+        <button class="category-card" data-category="classic">
+          <div class="category-image">
+            <img
+              src="./assets/images/category-classic.webp"
+              alt="پوشاک کلاسیک و رسمی"
+              width="616"
+              height="612"
+            /><span class="category-fade"></span>
+          </div>
+          <span class="category-label"
+            >کلاسیک و رسمی<svg class="icon"><use href="#i-arrow" /></svg
+          ></span>
+        </button>
+        <button class="category-card" data-category="sport">
+          <div class="category-image">
+            <img
+              src="./assets/images/category-sport.webp"
+              alt="پوشاک اسپرت و ورزشی"
+              width="616"
+              height="612"
+            /><span class="category-fade"></span>
+          </div>
+          <span class="category-label"
+            >اسپرت و ورزشی<svg class="icon"><use href="#i-arrow" /></svg
+          ></span>
+        </button>
+        <button class="category-card" data-category="casual">
+          <div class="category-image">
+            <img
+              src="./assets/images/category-casual.webp"
+              alt="پوشاک روزمره و راحتی"
+              width="616"
+              height="612"
+            /><span class="category-fade"></span>
+          </div>
+          <span class="category-label"
+            >روزمره و راحتی<svg class="icon"><use href="#i-arrow" /></svg
+          ></span>
+        </button>
+        <button class="category-card" data-category="kids">
+          <div class="category-image">
+            <img
+              src="./assets/images/category-kids.webp"
+              alt="پوشاک بچگانه"
+              width="616"
+              height="612"
+            /><span class="category-fade"></span>
+          </div>
+          <span class="category-label"
+            >بچگانه<svg class="icon"><use href="#i-arrow" /></svg
+          ></span>
+        </button>
+      </section>
+      <section
+        id="products"
+        class="products-section container"
+        aria-labelledby="products-heading"
+      >
+        <div class="products-header">
+          <div class="collection-title">
+            <span class="title-spark"
+              ><svg><use href="#i-spark" /></svg
+            ></span>
+            <h2 id="products-heading">جدیدترین های برند</h2>
+            <span class="collection-brand" lang="en" dir="ltr"
+              >Superdry &amp; Co</span
+            >
+          </div>
+          <button class="view-all" id="view-all">
+            مشاهده همه<svg class="icon"><use href="#i-left" /></svg>
+          </button>
+        </div>
+        <p
+          id="filter-summary"
+          class="filter-summary"
+          hidden
+          aria-live="polite"
+        ></p>
+        <div class="products-track" id="products-track"></div>
+        <p id="empty-results" class="empty-results" hidden>
+          محصولی با این مشخصات پیدا نشد.
+          <button id="clear-filters">نمایش همه محصولات</button>
+        </p>
+        <button
+          class="carousel-arrow previous"
+          id="previous"
+          aria-label="محصول قبلی"
+        >
+          <svg class="icon"><use href="#i-left" /></svg>
+        </button>
+        <button class="carousel-arrow next" id="next" aria-label="محصول بعدی">
+          <svg class="icon"><use href="#i-left" /></svg>
+        </button>
+        <div
+          class="product-pagination"
+          id="product-pagination"
+          aria-label="انتخاب محصول"
+        ></div>
+      </section>
+    </main>
+    <dialog id="detail-dialog" aria-labelledby="dialog-heading">
+      <div class="dialog-header">
+        <h2 id="dialog-heading"></h2>
+        <button class="close-dialog" aria-label="بستن">
+          <svg class="icon"><use href="#i-close" /></svg>
+        </button>
+      </div>
+      <div id="dialog-content"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+  </body>
 </html>

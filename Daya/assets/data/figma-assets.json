@@ -1,0 +1,61 @@
+[
+  {
+    "file": "hero-models.webp",
+    "node": "18:538",
+    "sourceHash": "761a92feb66ad91d6c035b93d256a7282c2ac9ba"
+  },
+  {
+    "file": "daya-logo.webp",
+    "node": "18:913",
+    "sourceHash": "3a10c903642c5283983a3ecf660259af3878d239"
+  },
+  {
+    "file": "product-blazer.webp",
+    "node": "18:630",
+    "sourceHash": "a19cd2f2e1933bdf5b505a70363a3eeb4888d67d"
+  },
+  {
+    "file": "product-mustard.webp",
+    "node": "18:657",
+    "sourceHash": "5bc23014ee1f0057a287528e60a35f0d6a656732"
+  },
+  {
+    "file": "product-patterned.webp",
+    "node": "18:694",
+    "sourceHash": "51ebcd924955c7811af4f9e1f2d322c32985bdb3"
+  },
+  {
+    "file": "product-trousers.webp",
+    "node": "18:707",
+    "sourceHash": "cfd8e1cac8ffa97f826b941ac26029cb4537ad76"
+  },
+  {
+    "file": "category-kids.webp",
+    "node": "18:546",
+    "sourceHash": "4507274a6033bef08eacbaaeb1826cfb15dfd8c9",
+    "crop": "visible 307.75 \u00d7 306 category image area"
+  },
+  {
+    "file": "category-casual.webp",
+    "node": "18:556",
+    "sourceHash": "a65bffd73c97faf8f7a5114b5cb7c2707196134c",
+    "crop": "visible 307.75 \u00d7 306 category image area"
+  },
+  {
+    "file": "category-sport.webp",
+    "node": "18:566",
+    "sourceHash": "289e3fc0e1ba8ae42e15a58528b4219db2c54e24",
+    "crop": "visible 307.75 \u00d7 306 category image area"
+  },
+  {
+    "file": "category-classic.webp",
+    "node": "18:576",
+    "sourceHash": "77a3b04b70501689d70b4e6905153a1c38257d21",
+    "crop": "visible 307.75 \u00d7 306 category image area"
+  },
+  {
+    "file": "hero-background.webp",
+    "node": "18:512",
+    "sourceHash": "b7ecd5ae597da01af0d478d4e50346b7166239f6"
+  }
+]
