@@ -57,6 +57,30 @@
             stroke="none"
           />
         </symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 6v6l4 2" />
+        </symbol>
+        <symbol id="i-message" viewBox="0 0 24 24">
+          <path d="M4 4h16v13H9l-5 4V4Z" />
+          <path d="M8 8h8M8 12h5" />
+        </symbol>
+        <symbol id="i-up" viewBox="0 0 24 24">
+          <path d="m6 14 6-6 6 6" />
+        </symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <path d="M17.5 6.5h.01" />
+        </symbol>
+        <symbol id="i-telegram" viewBox="0 0 24 24">
+          <path d="m3 10 18-7-4 18-6-6-4 3 1-6 9-6-7 8-7-4Z" />
+        </symbol>
+        <symbol id="i-phone" viewBox="0 0 24 24">
+          <path
+            d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4c0 2-2 3-4 2C9 19 5 15 3 7c-1-2 0-4 2-4Z"
+          />
+        </symbol>
       </defs>
     </svg>
     <a class="skip-link" href="#products">رفتن به محصولات</a>
@@ -124,9 +148,8 @@
           ><button data-audience="men">مردانه</button
           ><button data-audience="kids">بچگانه</button>
           <span class="nav-divider" aria-hidden="true"></span>
-          <button data-open="magazine">دایا مگ</button
-          ><button data-open="contact">تماس با ما</button
-          ><button data-open="about">درباره ما</button>
+          <a href="#magazine">دایا مگ</a><a href="#footer-contact">تماس با ما</a
+          ><a href="#about">درباره ما</a>
         </div>
       </nav>
     </header>
@@ -164,7 +187,11 @@
           <span></span><span></span><span class="active"></span>
         </div>
       </section>
-      <section class="categories container" aria-label="دسته‌بندی‌های پوشاک">
+      <section
+        id="categories"
+        class="categories container"
+        aria-label="دسته‌بندی‌های پوشاک"
+      >
         <button class="category-card" data-category="classic">
           <div class="category-image">
             <img
@@ -264,7 +291,452 @@
           aria-label="انتخاب محصول"
         ></div>
       </section>
+      <section
+        class="collection-promo container"
+        aria-label="کالکشن جدید سوپردرای"
+      >
+        <div class="promo-pictures">
+          <img
+            src="./assets/images/promo-shoes.webp"
+            alt="کالکشن کفش اسپرت و ورزشی"
+            width="1302"
+            height="700"
+            loading="lazy"
+          /><img
+            src="./assets/images/promo-jacket.webp"
+            alt="کالکشن کت کژوال"
+            width="1302"
+            height="700"
+            loading="lazy"
+          />
+        </div>
+        <span class="promo-wordmark" lang="en" dir="ltr">Superdry</span>
+        <div class="promo-shade"></div>
+        <div class="promo-copy promo-copy-right">
+          <h2>به وقت خرید کفش های اسپرت و ورزشی</h2>
+          <p>کالکشن های جدید‍ کفش و کتونی</p>
+          <button class="ticket-link" data-category="sport">
+            مشاهده محصولات<svg class="icon" aria-hidden="true">
+              <use href="#i-arrow" />
+            </svg>
+          </button>
+        </div>
+        <div class="promo-copy promo-copy-left">
+          <h2>به وقت خرید کت کژوال</h2>
+          <p>کالکشن های جدید‍ کت تک</p>
+          <button class="ticket-link" data-category="classic">
+            مشاهده محصولات<svg class="icon" aria-hidden="true">
+              <use href="#i-arrow" />
+            </svg>
+          </button>
+        </div>
+      </section>
+      <section
+        id="bestsellers"
+        class="bestsellers container"
+        aria-labelledby="bestsellers-heading"
+      >
+        <div class="section-heading">
+          <h2 id="bestsellers-heading">
+            پرفروشترین محصولات<svg class="icon" aria-hidden="true">
+              <use href="#i-spark" />
+            </svg>
+          </h2>
+          <div
+            class="bestseller-tabs"
+            role="group"
+            aria-label="فیلتر محصولات پرفروش"
+          >
+            <button data-best-audience="all" aria-pressed="true">
+              همه استایل</button
+            ><button data-best-audience="men" aria-pressed="false">
+              مردانه</button
+            ><button data-best-audience="women" aria-pressed="false">
+              زنانه</button
+            ><button data-best-audience="kids" aria-pressed="false">
+              بچه گانه
+            </button>
+          </div>
+          <span class="heading-rule"></span
+          ><button class="view-all" id="best-view-all">
+            مشاهده همه<svg class="icon" aria-hidden="true">
+              <use href="#i-left" />
+            </svg>
+          </button>
+        </div>
+        <div class="bestseller-grid" id="bestseller-grid"></div>
+        <p id="best-empty" class="empty-results" hidden aria-live="polite">
+          محصولی با این مشخصات پیدا نشد.
+        </p>
+      </section>
+      <section
+        id="styles"
+        class="style-collections container"
+        aria-labelledby="styles-heading"
+      >
+        <div class="section-heading">
+          <h2 id="styles-heading">
+            کامل‌ترین کالکشن برای هر استایل<svg class="icon" aria-hidden="true">
+              <use href="#i-spark" />
+            </svg>
+          </h2>
+        </div>
+        <div class="style-grid">
+          <button class="style-card" data-style="casual">
+            <img
+              src="./assets/images/style-casual.webp"
+              alt="کژوال"
+              width="616"
+              height="844"
+              loading="lazy"
+            /><span class="style-fade"></span
+            ><span class="style-caption"
+              ><span
+                ><strong>کژوال</strong
+                ><span lang="en" dir="ltr">Casual Styles</span></span
+              ><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg
+            ></span></button
+          ><button class="style-card" data-style="vintage">
+            <img
+              src="./assets/images/style-vintage.webp"
+              alt="وینتیج"
+              width="616"
+              height="844"
+              loading="lazy"
+            /><span class="style-fade"></span
+            ><span class="style-caption"
+              ><span
+                ><strong>وینتیج</strong
+                ><span lang="en" dir="ltr">Vintage Styles</span></span
+              ><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg
+            ></span></button
+          ><button class="style-card" data-style="monochrome">
+            <img
+              src="./assets/images/style-monochrome.webp"
+              alt="مونوکروم"
+              width="616"
+              height="844"
+              loading="lazy"
+            /><span class="style-fade"></span
+            ><span class="style-caption"
+              ><span
+                ><strong>مونوکروم</strong
+                ><span lang="en" dir="ltr">Monocrome Styles</span></span
+              ><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg
+            ></span></button
+          ><button class="style-card" data-style="minimal">
+            <img
+              src="./assets/images/style-minimal.webp"
+              alt="مینیمال و ساده"
+              width="616"
+              height="844"
+              loading="lazy"
+            /><span class="style-fade"></span
+            ><span class="style-caption"
+              ><span
+                ><strong>مینیمال و ساده</strong
+                ><span lang="en" dir="ltr">Minimal Styles</span></span
+              ><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg
+            ></span>
+          </button>
+        </div>
+      </section>
+      <section
+        id="magazine"
+        class="magazine container"
+        aria-labelledby="magazine-heading"
+      >
+        <div class="section-heading">
+          <h2 id="magazine-heading">
+            آخرین های دایامگ<svg class="icon" aria-hidden="true">
+              <use href="#i-spark" />
+            </svg>
+          </h2>
+          <span class="heading-rule"></span
+          ><button class="view-all" id="magazine-all">
+            مشاهده همه<svg class="icon" aria-hidden="true">
+              <use href="#i-left" />
+            </svg>
+          </button>
+        </div>
+        <div class="magazine-grid">
+          <article class="article-card">
+            <button
+              data-article="0"
+              aria-label="مطالعهٔ استایل با اصالت؛ وقتی برند حرف می‌زند"
+            >
+              <span class="article-image"
+                ><img
+                  src="./assets/images/article-authentic.webp"
+                  alt="استایل با اصالت؛ وقتی برند حرف می‌زند"
+                  width="596"
+                  height="462"
+                  loading="lazy"
+              /></span>
+              <h3>استایل با اصالت؛ وقتی برند حرف می‌زند</h3>
+            </button>
+            <div class="article-meta">
+              <span>۶ ساعت پیش</span
+              ><span
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-clock" /></svg
+                >۲ دقیقه زمان مطالعه</span
+              >
+            </div>
+          </article>
+          <article class="article-card">
+            <button
+              data-article="1"
+              aria-label="مطالعهٔ راهنمای خرید لباس برند اصل"
+            >
+              <span class="article-image"
+                ><img
+                  src="./assets/images/article-original.webp"
+                  alt="راهنمای خرید لباس برند اصل"
+                  width="596"
+                  height="462"
+                  loading="lazy"
+              /></span>
+              <h3>راهنمای خرید لباس برند اصل</h3>
+            </button>
+            <div class="article-meta">
+              <span>۶ ساعت پیش</span
+              ><span
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-clock" /></svg
+                >۲ دقیقه زمان مطالعه</span
+              >
+            </div>
+          </article>
+          <article class="article-card">
+            <button
+              data-article="2"
+              aria-label="مطالعهٔ ترندهای روز دنیا در لباس‌های برند"
+            >
+              <span class="article-image"
+                ><img
+                  src="./assets/images/article-trends.webp"
+                  alt="ترندهای روز دنیا در لباس‌های برند"
+                  width="596"
+                  height="462"
+                  loading="lazy"
+              /></span>
+              <h3>ترندهای روز دنیا در لباس‌های برند</h3>
+            </button>
+            <div class="article-meta">
+              <span>۶ ساعت پیش</span
+              ><span
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-clock" /></svg
+                >۲ دقیقه زمان مطالعه</span
+              >
+            </div>
+          </article>
+          <article class="article-card">
+            <button
+              data-article="3"
+              aria-label="مطالعهٔ بررسی برندهای معروف پوشاک"
+            >
+              <span class="article-image"
+                ><img
+                  src="./assets/images/article-brands.webp"
+                  alt="بررسی برندهای معروف پوشاک"
+                  width="596"
+                  height="462"
+                  loading="lazy"
+              /></span>
+              <h3>بررسی برندهای معروف پوشاک</h3>
+            </button>
+            <div class="article-meta">
+              <span>۶ ساعت پیش</span
+              ><span
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-clock" /></svg
+                >۲ دقیقه زمان مطالعه</span
+              >
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
+    <section id="faq" class="faq" aria-labelledby="faq-heading">
+      <div class="faq-heading">
+        <span class="faq-symbol"
+          ><svg class="icon" aria-hidden="true"><use href="#i-message" /></svg
+        ></span>
+        <h2 id="faq-heading"><span></span>سوالات متداول<span></span></h2>
+      </div>
+      <div class="faq-grid">
+        <details>
+          <summary>
+            آیا محصولات شما کاملاً اورجینال هستند؟<span aria-hidden="true"
+              >+</span
+            >
+          </summary>
+          <p>
+            برای دریافت جزئیات و راهنمایی دربارهٔ این موضوع، با پشتیبانی دایامد
+            به شمارهٔ <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.
+          </p>
+        </details>
+        <details>
+          <summary>
+            آیا امکان مرجوعی یا تعویض وجود دارد؟<span aria-hidden="true"
+              >+</span
+            >
+          </summary>
+          <p>
+            برای دریافت جزئیات و راهنمایی دربارهٔ این موضوع، با پشتیبانی دایامد
+            به شمارهٔ <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.
+          </p>
+        </details>
+        <details>
+          <summary>
+            مدت زمان ارسال سفارش چقدر است؟<span aria-hidden="true">+</span>
+          </summary>
+          <p>
+            برای دریافت جزئیات و راهنمایی دربارهٔ این موضوع، با پشتیبانی دایامد
+            به شمارهٔ <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.
+          </p>
+        </details>
+        <details>
+          <summary>
+            آیا قیمت‌ها نسبت به بازار مناسب هستند؟<span aria-hidden="true"
+              >+</span
+            >
+          </summary>
+          <p>
+            برای دریافت جزئیات و راهنمایی دربارهٔ این موضوع، با پشتیبانی دایامد
+            به شمارهٔ <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.
+          </p>
+        </details>
+        <details>
+          <summary>
+            آیا امکان مرجوعی یا تعویض وجود دارد؟<span aria-hidden="true"
+              >+</span
+            >
+          </summary>
+          <p>
+            برای دریافت جزئیات و راهنمایی دربارهٔ این موضوع، با پشتیبانی دایامد
+            به شمارهٔ <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.
+          </p>
+        </details>
+        <details>
+          <summary>
+            چگونه سایز مناسب خود را انتخاب کنم؟<span aria-hidden="true">+</span>
+          </summary>
+          <p>
+            برای دریافت جزئیات و راهنمایی دربارهٔ این موضوع، با پشتیبانی دایامد
+            به شمارهٔ <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.
+          </p>
+        </details>
+      </div>
+    </section>
+    <footer class="site-footer" id="about">
+      <div class="container">
+        <div class="footer-intro">
+          <img
+            src="./assets/images/daya-logo-footer.svg"
+            alt="DAYAMODE"
+            width="100"
+            height="68"
+            loading="lazy"
+          />
+          <p>
+            دایامد مجموعه‌ای پیشرو در صنعت مد و پوشاک ایران است که مأموریتش
+            فراتر از عرضه لباس است؛ ما سبک زندگی می‌سازیم. با توسعه چندین برند
+            محبوب، تجربه‌ای یکپارچه و متفاوت از مد را در فروشگاه‌های حضوری و
+            آنلاین به مشتریان ارائه می‌کنیم.
+          </p>
+        </div>
+        <div class="footer-content">
+          <div class="footer-nav-columns">
+            <nav aria-label="منوی سایت">
+              <h2>منو سایت<span></span></h2>
+              <div class="footer-link-grid">
+                <a href="./">صفحه اصلی</a
+                ><a href="#categories">دسته بندی محصولات</a
+                ><a href="#footer-contact">تماس با ما</a
+                ><a href="#about">درباره ما</a><a href="#magazine">دایا مگ</a>
+              </div>
+            </nav>
+            <nav aria-label="خرید بر اساس دسته بندی">
+              <h2>خرید بر اساس دسته بندی<span></span></h2>
+              <div class="footer-link-grid">
+                <button data-audience="women">زنانه</button
+                ><button data-audience="men">مردانه</button
+                ><button data-audience="kids">بچه گانه</button
+                ><button data-category="sport">ورزش و سفر</button
+                ><button data-best-category="accessories">کیف و کفش</button>
+              </div>
+            </nav>
+            <nav aria-label="راهنمای مشتریان">
+              <h2>راهنمای مشتریان<span></span></h2>
+              <div class="footer-link-grid">
+                <button data-open="cart">سبد خرید</button
+                ><button data-open="account">حساب کاربری</button
+                ><button data-open="branches">شعب دایامد</button
+                ><button data-open="privacy">قوانین و حریم خصوصی</button
+                ><a href="#faq">سوالات متداول</a>
+              </div>
+            </nav>
+          </div>
+          <div class="footer-contact-row">
+            <div id="footer-contact">
+              <div class="phone-numbers">
+                <a href="tel:+98212541478">۰۲۱- ۲۵۴۱۴۷۸</a><span></span
+                ><a href="tel:+98212541478">۰۲۱- ۲۵۴۱۴۷۸</a>
+              </div>
+              <p>
+                منتظر صدای گرم شما هستیم !! اگر سوالی داشتید با ما تماس بگیرید
+              </p>
+            </div>
+            <div class="trust-marks">
+              <h2>چگونه به ما اعتماد کنید<span></span></h2>
+              <div>
+                <img
+                  src="./assets/images/trust-samandehi.webp"
+                  alt="نشان ساماندهی در طرح دایامد"
+                  width="56"
+                  height="63"
+                  loading="lazy"
+                /><img
+                  src="./assets/images/trust-enamad.webp"
+                  alt="نشان اعتماد در طرح دایامد"
+                  width="58"
+                  height="61"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <button id="back-to-top">
+            بازگشت به بالا
+            <svg class="icon" aria-hidden="true"><use href="#i-up" /></svg>
+          </button>
+          <div class="footer-bottom-inner">
+            <p>© تمامی حقوق مادی و معنوی برای این سایت محفوظ می باشد</p>
+            <div class="social-links">
+              <span>همراه ما در شبکه‌های اجتماعی باشید :</span
+              ><button data-social="اینستاگرام" aria-label="اینستاگرام">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-instagram" />
+                </svg></button
+              ><button data-social="تلگرام" aria-label="تلگرام">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-telegram" />
+                </svg></button
+              ><button data-social="واتساپ" aria-label="واتساپ">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-phone" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
     <dialog id="detail-dialog" aria-labelledby="dialog-heading">
       <div class="dialog-header">
         <h2 id="dialog-heading"></h2>

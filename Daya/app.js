@@ -56,6 +56,76 @@ const products = [
   oldPrice: 4687000,
   stock: 10,
 }));
+const latestProductIds = new Set(products.map((p) => p.id));
+products.push(
+  ...[
+    {
+      id: "best-sweatshirt",
+      image: "best-sweatshirt.webp",
+      alt: "پیراهن روشن با گرادینت قهوه‌ای",
+      audience: "men",
+      category: "casual",
+      discount: true,
+      width: 239,
+      height: 239,
+      top: 38,
+      left: 30,
+    },
+    {
+      id: "best-brown-shirt",
+      image: "best-brown-shirt.webp",
+      alt: "بلوز کوتاه قهوه‌ای",
+      audience: "women",
+      category: "casual",
+      width: 167,
+      height: 214,
+      top: 51,
+      left: 66,
+    },
+    {
+      id: "best-green-shirt",
+      image: "best-green-shirt.webp",
+      alt: "کت سبز تیره",
+      audience: "men",
+      category: "classic",
+      width: 239,
+      height: 239,
+      top: 38,
+      left: 30,
+    },
+    {
+      id: "best-bag",
+      image: "best-bag.webp",
+      alt: "کیف دستی مشکی",
+      audience: "all",
+      category: "accessories",
+      discount: true,
+      width: 239,
+      height: 239,
+      top: 38,
+      left: 30,
+    },
+  ].map((p) => ({
+    ...p,
+    collection: "best",
+    sizes: ["نامشخص"],
+    title: "پیراهن آستین بلند یقه برگردان مردانه ام کی مدل 1896",
+    price: 2687000,
+    oldPrice: 4687000,
+    stock: 10,
+  })),
+);
+let bestAudience = "all",
+  bestCategory = "all";
+const articles = [
+  {
+    title: "استایل با اصالت؛ وقتی برند حرف می‌زند",
+    image: "article-authentic.webp",
+  },
+  { title: "راهنمای خرید لباس برند اصل", image: "article-original.webp" },
+  { title: "ترندهای روز دنیا در لباس‌های برند", image: "article-trends.webp" },
+  { title: "بررسی برندهای معروف پوشاک", image: "article-brands.webp" },
+];
 const categoryNames = {
   classic: "کلاسیک و رسمی",
   sport: "اسپرت و ورزشی",
@@ -116,16 +186,19 @@ function showToast(message) {
   }, 3200);
 }
 function renderProducts() {
+  renderBestsellers();
   const query = search.value.trim().toLocaleLowerCase("fa");
-  visible = products.filter(
-    (p) =>
-      (category === "all" || p.category === category) &&
-      (audience === "all" || p.audience === audience) &&
-      (!query ||
-        `${p.title} ${p.alt} ${categoryNames[p.category]} Superdry سوپردرای`
-          .toLocaleLowerCase("fa")
-          .includes(query)),
-  );
+  visible = products
+    .filter((p) => latestProductIds.has(p.id))
+    .filter(
+      (p) =>
+        (category === "all" || p.category === category) &&
+        (audience === "all" || p.audience === audience) &&
+        (!query ||
+          `${p.title} ${p.alt} ${categoryNames[p.category]} Superdry سوپردرای`
+            .toLocaleLowerCase("fa")
+            .includes(query)),
+    );
   track.innerHTML = visible
     .map(
       (p) => `<article class="product-card" data-id="${p.id}">
@@ -177,13 +250,11 @@ function resetFilters() {
   renderProducts();
 }
 function scrollToProducts() {
-  document
-    .querySelector("#products")
-    .scrollIntoView({
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-    });
+  document.querySelector("#products").scrollIntoView({
+    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "instant"
+      : "smooth",
+  });
 }
 function moveTo(index) {
   if (!visible.length) return;
@@ -239,7 +310,7 @@ function openProduct(id) {
   if (!p) return;
   openDialog(
     p.alt,
-    `<div class="dialog-product"><img src="./assets/images/${p.image}" alt="${p.alt}"><div><p>${p.title}</p><p>${fa(p.price)} تومان</p><label class="size-select">انتخاب سایز<select id="selected-size">${p.sizes.map((size) => `<option>${size}</option>`).join("")}</select></label><p>۱۰ عدد موجود</p><button class="primary-button" data-add="${p.id}">افزودن به سبد خرید</button></div></div>`,
+    `<div class="dialog-product"><img src="./assets/images/${p.image}" alt="${p.alt}"><div><p>${p.title}</p><p>${fa(p.price)} تومان</p><label class="size-select">${p.collection === "best" ? "سایز در طرح مشخص نشده" : "انتخاب سایز"}<select id="selected-size">${p.sizes.map((size) => `<option>${size}</option>`).join("")}</select></label><p>۱۰ عدد موجود</p><button class="primary-button" data-add="${p.id}">افزودن به سبد خرید</button></div></div>`,
   );
 }
 function openCart() {
@@ -258,16 +329,44 @@ function openCart() {
 }
 const info = {
   account: ["حساب کاربری", "<p>ورود و ثبت‌نام در نسخهٔ نمایشی فعال نیست.</p>"],
-  about: [
-    "دربارهٔ دایامد",
-    "<p>دایامد؛ انتخاب پوشاک کلاسیک و رسمی، اسپرت و ورزشی، روزمره و راحتی و بچگانه.</p>",
+  branches: [
+    "شعب دایامد",
+    '<p>نشانی شعب هنوز منتشر نشده است. برای راهنمایی با <a href="tel:+98212541478">۰۲۱-۲۵۴۱۴۷۸</a> تماس بگیرید.</p>',
   ],
-  contact: ["تماس با ما", "<p>اطلاعات تماس فروشگاه هنوز اضافه نشده است.</p>"],
-  magazine: [
-    "دایا مگ",
-    "<p>مقاله‌های دایا مگ به‌زودی در این بخش قرار می‌گیرند.</p>",
+  privacy: [
+    "قوانین و حریم خصوصی",
+    "<p>این صفحهٔ نمایشی سفارش یا پرداخت ثبت نمی‌کند. سبد خرید نمونه در مرورگر همین دستگاه ذخیره می‌شود.</p>",
   ],
 };
+function renderBestsellers() {
+  const query = search.value.trim().toLocaleLowerCase("fa");
+  const selected = products.filter(
+    (p) =>
+      p.collection === "best" &&
+      (bestAudience === "all" || p.audience === bestAudience) &&
+      (bestCategory === "all" || p.category === bestCategory) &&
+      (!query ||
+        `${p.alt} ${p.title} Superdry سوپردرای`
+          .toLocaleLowerCase("fa")
+          .includes(query)),
+  );
+  document.querySelector("#bestseller-grid").innerHTML = selected
+    .map(
+      (p) =>
+        `<article class="bestseller-card" data-id="${p.id}"><button class="product-picture" data-product="${p.id}" aria-label="مشاهدهٔ ${p.alt}" style="--image-width:${p.width}px;--image-height:${p.height}px;--image-top:${p.top}px;--image-left:${p.left}px"><img class="product-image" src="./assets/images/${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy">${p.discount ? '<span class="discount">۱۰٪</span>' : ""}${p.id === "best-bag" ? '<span class="best-brand" lang="en" dir="ltr">superdry</span>' : ""}</button><div class="product-info"><button class="product-title" data-product="${p.id}">${p.title}</button><div class="product-pricing"><span class="old-price"><del>۴,۶۸۷,۰۰۰</del><span class="currency">تومان</span></span><span class="price">۲,۶۸۷,۰۰۰<span class="currency">تومان</span></span></div></div></article>`,
+    )
+    .join("");
+  document.querySelector("#best-empty").hidden = selected.length !== 0;
+  document.querySelector("#bestseller-grid").hidden = selected.length === 0;
+  document
+    .querySelectorAll("[data-best-audience]")
+    .forEach((button) =>
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.bestAudience === bestAudience),
+      ),
+    );
+}
 document.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
@@ -380,3 +479,83 @@ document.addEventListener("keydown", (event) => {
 });
 persistCart();
 renderProducts();
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  if (button.dataset.bestAudience) {
+    bestAudience = button.dataset.bestAudience;
+    bestCategory = "all";
+    renderBestsellers();
+  }
+  if (button.dataset.bestCategory) {
+    bestCategory = button.dataset.bestCategory;
+    bestAudience = "all";
+    renderBestsellers();
+    document
+      .querySelector("#bestsellers")
+      .scrollIntoView({ behavior: "smooth" });
+  }
+  if (button.dataset.article !== undefined) {
+    const article = articles[Number(button.dataset.article)];
+    if (article)
+      openDialog(
+        article.title,
+        `<img class="article-dialog-image" src="./assets/images/${article.image}" alt="${article.title}"><p>متن کامل این مقاله هنوز منتشر نشده است.</p>`,
+      );
+  }
+  if (button.dataset.style) {
+    const labels = {
+      casual: ["کژوال", "Casual Styles"],
+      vintage: ["وینتیج", "Vintage Styles"],
+      monochrome: ["مونوکروم", "Monocrome Styles"],
+      minimal: ["مینیمال و ساده", "Minimal Styles"],
+    };
+    const [title, en] = labels[button.dataset.style];
+    openDialog(
+      title,
+      `<img class="article-dialog-image" src="./assets/images/style-${button.dataset.style}.webp" alt="${title}" style="object-position:center 25%"><p lang="en" dir="ltr">${en}</p><button class="primary-button" id="style-view-products">مشاهده محصولات</button>`,
+    );
+  }
+  if (button.id === "style-view-products") {
+    dialog.close();
+    bestAudience = "all";
+    bestCategory = "all";
+    renderBestsellers();
+    document
+      .querySelector("#bestsellers")
+      .scrollIntoView({ behavior: "smooth" });
+  }
+  if (button.dataset.social) {
+    showToast(`نشانی ${button.dataset.social} هنوز اضافه نشده است.`);
+  }
+});
+document.querySelector("#best-view-all").addEventListener("click", () => {
+  bestAudience = "all";
+  bestCategory = "all";
+  search.value = "";
+  renderProducts();
+});
+document
+  .querySelector("#magazine-all")
+  .addEventListener("click", () =>
+    openDialog(
+      "آخرین‌های دایامگ",
+      articles
+        .map(
+          (article, i) =>
+            `<button class="primary-button" data-article="${i}">${article.title}</button>`,
+        )
+        .join(""),
+    ),
+  );
+document
+  .querySelector("#back-to-top")
+  .addEventListener("click", () =>
+    window.scrollTo({
+      top: 0,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    }),
+  );
