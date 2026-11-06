@@ -18,3 +18,20 @@
 .brand-star{display:block;flex:0 0 var(--brand-star-size);width:var(--brand-star-size);height:var(--brand-star-size);background:#a2937c;clip-path:polygon(50% 0,65% 35%,100% 50%,65% 65%,50% 100%,35% 65%,0 50%,35% 35%)}
 .full-bleed-divider{z-index:1;overflow:hidden;background:#fff}
 .divider-tile{transform-origin:0 0}
+
+/* Confine horizontal scrolling to deliberate carousels, never the page. */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+@supports(overflow:clip){html,body{overflow-x:clip}}
+#main-content{width:100%;max-width:100%;overflow-x:clip}
+#mobile-navigation{overflow:hidden}
+.blog-shell{position:absolute;height:278px;direction:rtl;min-width:0}
+.blog-track{display:flex;gap:24px;width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-inline:0;scrollbar-width:thin;scrollbar-color:#a2937c #f4f2ee;touch-action:pan-x pan-y pinch-zoom;padding-bottom:12px;-webkit-overflow-scrolling:touch}
+.blog-card{flex:0 0 360px;min-width:0;scroll-snap-align:start;scroll-snap-stop:normal;background:#ece9e5;border:1px solid #e4dfd8}
+.blog-card-action{display:block;border:0;width:100%;padding:0;background:transparent;color:#262420;text-align:right;cursor:pointer;user-select:none}
+.blog-card-action img{display:block;width:100%;height:179px;object-fit:cover;filter:grayscale(1);background:#ece9e5}
+.blog-card-title{display:block;font-weight:700;font-size:16px;line-height:26px;padding:10px 12px 0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.blog-card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;line-height:22px;padding:4px 12px 10px;direction:ltr;color:#8c857c}
+.blog-card-meta time,.blog-card-more{direction:rtl}.blog-card-more{color:#514b41}
+.blog-arrow{position:absolute;top:78px;width:34px;height:34px;display:grid;place-items:center;border:1px solid #ded8ce;border-radius:50%;background:#fff;color:#756b59;font:20px Doran;z-index:2;box-shadow:0 2px 8px #26242012}
+.blog-previous{right:-14px}.blog-next{left:-14px}
+.blog-mobile{height:240px}.blog-mobile .blog-track{gap:16px;padding-bottom:10px}.blog-mobile .blog-card{flex-basis:274px}.blog-mobile .blog-card-action img{height:154px}.blog-mobile .blog-card-title{font-size:14px;line-height:24px;padding:8px 10px 0}.blog-mobile .blog-card-meta{font-size:11px;line-height:20px;padding:4px 10px 8px}.blog-mobile .blog-arrow{top:65px;width:30px;height:30px}.blog-mobile .blog-previous{right:-12px}.blog-mobile .blog-next{left:-12px}

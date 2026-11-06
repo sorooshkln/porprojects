@@ -22,7 +22,7 @@ function persist(){try{localStorage.setItem('tavakoli-gold-cart',JSON.stringify(
 function updateBadge(){for(const el of stage.querySelectorAll('[data-node="11:430"],[data-node="11:917"]')){el.replaceChildren();const span=document.createElement('span');span.className='live-text';span.style.fontSize='11px';span.style.color='white';span.textContent=number(cart.reduce((sum,x)=>sum+x.qty,0));el.append(span);}}
 function showProduct(p){const wrap=document.createElement('div'),img=document.createElement('img');img.src='assets/images/'+p.image;img.alt=p.name;wrap.append(img);const price=document.createElement('p');price.textContent=`${number(p.price)} تومان`;wrap.append(price,button('افزودن به سبد خرید',()=>{let item=cart.find(x=>x.id===p.id);if(item){item.qty=Math.min(99,item.qty+1);}else cart.push({id:p.id,qty:1});persist();notify('به سبد خرید اضافه شد');}));openPanel(p.name,wrap);}
 function showCart(){const wrap=document.createElement('div');if(!cart.length){const p=document.createElement('p');p.className='empty';p.textContent='سبد خرید شما خالی است';wrap.append(p);}else {for(const item of cart){const p=catalogue[item.id],row=document.createElement('div');row.className='cart-row';const img=document.createElement('img');img.src='assets/images/'+p.image;img.alt=p.name;const label=document.createElement('span');label.textContent=`${p.name} × ${number(item.qty)} — ${number(p.price*item.qty)} تومان`;row.append(img,label,button('حذف',()=>{cart=cart.filter(x=>x!==item);persist();showCart();},''));wrap.append(row);}const total=document.createElement('p');total.textContent='مجموع: '+number(cart.reduce((sum,x)=>sum+catalogue[x.id].price*x.qty,0))+' تومان';wrap.append(total);const note=document.createElement('p');note.textContent='این سبد برای پیش‌نمایش طرح است؛ خرید و پرداخت آنلاین هنوز متصل نشده‌اند.';wrap.append(note);}openPanel('سبد خرید',wrap);}
-function scrollSection(desktopY,mobileY){panel.close();window.scrollTo({top:(currentMode==='mobile'?mobileY:desktopY)*scale,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}
+function scrollSection(desktopY,mobileY){panel.close();window.scrollTo({top:Math.max(0,(currentMode==='mobile'?mobileY-47:desktopY)*scale),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}
 function menu(){const nav=document.createElement('nav');for(const [label,d,m] of [['خانه',0,0],['محصولات',963,379],['تخفیف دار',1451,741],['طلای سفارشی',2074,1087],['پرفروش ترین محصولات',2421,1305],['مجله توکلی',3670,1787],['تماس با ما',4211,1787]])nav.append(button(label,()=>scrollSection(d,m),''));openPanel('طلای توکلی',nav);}
 function search(){const wrap=document.createElement('div'),input=document.createElement('input'),results=document.createElement('div');input.type='search';input.placeholder='جستجوی محصول';input.setAttribute('aria-label','جستجوی محصول');function update(){results.replaceChildren();const matches=catalogue.filter(p=>p.name.includes(input.value.trim()));if(!matches.length){results.textContent='محصولی پیدا نشد';return;}for(const p of matches)results.append(button(p.name+' — '+number(p.price)+' تومان',()=>showProduct(p),''));}input.addEventListener('input',update);wrap.append(input,results);openPanel('جستجو',wrap);update();input.focus();}
 function account(){openPanel('حساب کاربری','ورود و ثبت سفارش پس از اتصال به سامانهٔ فروش فعال خواهد شد.');}
@@ -40,15 +40,12 @@ function wire(){
   if(t==='مشاهده محصولات')control(n.id,t,()=>scrollSection(963,379));
   else if(t==='مشاهده همه')control(n.id,t,()=>scrollSection(2567,1466));
   else if(t==='ثبت سفارش' || t.includes('سفارش اختصاصی'))control(n.id,t,customOrder);
-  else if(t==='مطالعه بیشتر')control(n.id,t,article);
-  else if(t==='مقالات بیشتر')control(n.id,t,article);
+  else if(t==='مقالات بیشتر')control(n.id,t,()=>advanceBlog(1));
  }
  control(mobile?'11:1049':'11:650','سفارش طلای اختصاصی',customOrder);
  if(mobile){
   ['11:1014','11:1003','11:992'].forEach((id,i)=>control(id,discounted[i].name,()=>showProduct(discounted[i])));
   ['11:1092','11:1081','11:1070'].forEach((id,i)=>control(id,products[i].name,()=>showProduct(products[i])));
-  control('11:1237','مقاله بعدی',()=>notify('تمام کارت‌های مقاله در طرح عنوان یکسان دارند.'));
-  control('11:1238','مقاله قبلی',()=>notify('تمام کارت‌های مقاله در طرح عنوان یکسان دارند.'));
   [['11:1279','پروفایل',account],['11:1282','سبد خرید',showCart],['11:1285','خانه',()=>scrollSection(0,0)],['11:1288','دسته بندی',menu],['11:1291','ارتباط با ما',()=>openPanel('ارتباط با ما','اطلاعات تماس مطابق بخش پایانی طرح دسکتاپ است.')]].forEach(([id,label,fn])=>control(id,label,fn));
  }else{
   productIds.forEach((id,i)=>control(id,products[i].name,()=>showProduct(products[i])));
@@ -77,8 +74,9 @@ function installSliders(){
  }).filter(Boolean);
  function move(s,value){s.offset=Math.max(s.minimum,Math.min(s.maximum,value));const t=[...s.n.matrix];t[4]+=s.offset;s.element.style.transform=`matrix(${t.join(',')})`;s.buttons.forEach((b,i)=>b.style.left=(s.original[i]+s.offset)+'px');}
  let gesture=null,suppress=false;
- root.style.touchAction='pan-y';
- root.addEventListener('pointerdown',e=>{if(e.button!==0)return;const r=stage.getBoundingClientRect(),y=(e.clientY-r.top)/scale;const slider=sliders.find(s=>y>=s.box[1]&&y<=s.box[1]+s.box[3]);if(slider)gesture={slider,x:e.clientX,y:e.clientY,offset:slider.offset,dragging:false,id:e.pointerId};});
+ root.style.touchAction='auto';
+ for(const slider of sliders){slider.element.style.touchAction='pan-y';for(const b of slider.buttons)b.style.touchAction='pan-y';}
+ root.addEventListener('pointerdown',e=>{if(e.button!==0)return;const r=stage.getBoundingClientRect(),y=(e.clientY-r.top)/scale+47;const slider=sliders.find(s=>y>=s.box[1]&&y<=s.box[1]+s.box[3]);if(slider)gesture={slider,x:e.clientX,y:e.clientY,offset:slider.offset,dragging:false,id:e.pointerId};});
  root.addEventListener('pointermove',e=>{if(!gesture||e.pointerId!==gesture.id)return;const dx=e.clientX-gesture.x,dy=e.clientY-gesture.y;if(!gesture.dragging){if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8){gesture=null;return;}if(Math.abs(dx)<8)return;gesture.dragging=true;root.setPointerCapture?.(e.pointerId);}e.preventDefault();move(gesture.slider,gesture.offset+dx/scale);});
  root.addEventListener('pointerup',()=>{suppress=Boolean(gesture?.dragging);gesture=null;});root.addEventListener('pointercancel',()=>{gesture=null;});
  root.addEventListener('click',e=>{if(suppress){e.stopImmediatePropagation();e.preventDefault();suppress=false;}},true);
@@ -96,7 +94,7 @@ function installMobileNavigation(){
 }
 // These sections span the viewport while product cards keep their content width.
 function installPageAdjustments(){
- for(const id of ['11:621','11:624'])stage.querySelector(`[data-node="${id}"]`)?.remove();
+ for(const id of ['11:621','11:624','11:912'])stage.querySelector(`[data-node="${id}"]`)?.remove();
  const mobile=currentMode==='mobile';
  stage.querySelector(`[data-node="${mobile?'11:1239':'11:529'}"]`)?.remove();
  stage.querySelector(`[data-node="${mobile?'11:1103':'11:707'}"]`)?.remove();
@@ -106,13 +104,14 @@ function installPageAdjustments(){
   stage.append(el);
  }
  if(mobile){const el=document.createElement('div');el.className='full-bleed full-bleed-background';el.dataset.band='best-sellers-title';el.setAttribute('aria-hidden','true');stage.append(el);}
+ installBlog();
 }
 function resizeFullBleed(viewportWidth,contentWidth){
  const mobile=currentMode==='mobile';
  const dimensions={brand:mobile?[687,27]:[1296,56],'best-sellers':mobile?[1370,65]:[2396,98],divider:mobile?[1739,16]:[3512,47],'best-sellers-title':[1305,65]};
  for(const el of stage.querySelectorAll('.full-bleed')){
   const [y,height]=dimensions[el.dataset.band];
-  Object.assign(el.style,{left:((contentWidth-viewportWidth)/2)+'px',top:(y*scale)+'px',width:viewportWidth+'px',height:(height*scale)+'px'});
+  Object.assign(el.style,{left:((contentWidth-viewportWidth)/2)+'px',top:((y-(mobile?47:0))*scale)+'px',width:viewportWidth+'px',height:(height*scale)+'px'});
  }
  const brand=stage.querySelector('[data-band="brand"]');
  const itemWidth=(mobile?76.18:158)*scale;
@@ -142,6 +141,42 @@ function resizeFullBleed(viewportWidth,contentWidth){
  }
  [...divider.children].forEach((tile,i)=>{tile.style.transform=`translateX(${i*tileWidth}px) scale(${scale})`;});
 }
-function resize(){const viewportWidth=document.documentElement.clientWidth||innerWidth;const mode=viewportWidth<900?'mobile':'desktop';if(mode!==currentMode){currentMode=mode;layout=design.layouts[mode];stage.replaceChildren(createNode(layout,mode,document));wire();installMobileNavigation();installPageAdjustments();}const width=currentMode==='mobile'?Math.min(viewportWidth,600):Math.min(viewportWidth,1512);scale=width/layout.w;stage.style.width=width+'px';stage.style.height=(layout.h*scale)+'px';stage.firstElementChild.style.transform=`scale(${scale})`;resizeFullBleed(viewportWidth,width);const nav=document.querySelector('#mobile-navigation');if(nav){nav.style.width=width+'px';nav.style.height=(78*scale)+'px';nav.firstElementChild.style.transform=`scale(${scale})`;}}
+function advanceBlog(direction){
+ const track=stage.querySelector('.blog-track');if(!track)return;
+ const step=(track.firstElementChild?.offsetWidth||(currentMode==='mobile'?274:360))+(currentMode==='mobile'?16:24);
+ track.scrollBy({left:-direction*step,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+}
+function installBlog(){
+ const mobile=currentMode==='mobile';
+ for(const id of ['11:836','11:843','11:850','11:857','11:1228','11:1235','11:1237','11:1238'])stage.querySelector(`[data-node="${id}"]`)?.remove();
+ const shell=document.createElement('section');shell.className=`blog-shell${mobile?' blog-mobile':''}`;shell.setAttribute('aria-label','مقالات آموزشی طلای توکلی');
+ Object.assign(shell.style,{left:(mobile?20:100)+'px',top:(mobile?1891:3799)+'px',width:(mobile?350:1312)+'px'});
+ const track=document.createElement('div');track.className='blog-track';track.id='blog-track';track.setAttribute('aria-label','فهرست مقالات؛ برای مرور به چپ و راست حرکت کنید');track.tabIndex=0;track.setAttribute('role','region');
+ for(const id of ['11:836','11:843','11:850','11:857']){
+  const source=find(design.layouts.desktop,id),texts=all(source,n=>Boolean(n.text));
+  const heading=texts.find(n=>n.text.includes('راهنمای'))?.text||'راهنمای خرید طلای دست دوم';
+  const date=texts.find(n=>n.text.includes('بهمن'))?.text||'۱۲ بهمن ۱۴۰۲';
+  const card=document.createElement('article');card.className='blog-card';
+  const action=button('',article,'blog-card-action');action.setAttribute('aria-label','مطالعهٔ '+heading);
+  const img=document.createElement('img');img.src='assets/images/'+imageOf(source);img.alt=heading;img.loading='lazy';img.decoding='async';img.width=640;img.height=384;img.draggable=false;
+  const headingEl=document.createElement('span');headingEl.className='blog-card-title';headingEl.textContent=heading;
+  const meta=document.createElement('span');meta.className='blog-card-meta';
+  const time=document.createElement('time');time.dateTime='2024-02-01';time.textContent=date;
+  const more=document.createElement('span');more.className='blog-card-more';more.textContent='مطالعه بیشتر ←';
+  meta.append(time,more);action.append(img,headingEl,meta);card.append(action);track.append(card);
+ }
+ track.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();advanceBlog(e.key==='ArrowLeft'?1:-1);}});
+ // Touch uses the browser's native scrolling. Mouse dragging is scoped to
+ // this track and suppresses article clicks only after a horizontal drag.
+ let drag=null,suppress=false;
+ track.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;drag={x:e.clientX,y:e.clientY,left:track.scrollLeft,moved:false,id:e.pointerId};});
+ track.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.x;if(!drag.moved){if(Math.abs(e.clientY-drag.y)>Math.abs(dx)){drag=null;return;}if(Math.abs(dx)<6)return;drag.moved=true;track.setPointerCapture?.(e.pointerId);}e.preventDefault();track.scrollLeft=drag.left-dx/scale;});
+ track.addEventListener('pointerup',()=>{suppress=Boolean(drag?.moved);drag=null;});track.addEventListener('pointercancel',()=>{drag=null;});
+ track.addEventListener('click',e=>{if(suppress){e.preventDefault();e.stopImmediatePropagation();suppress=false;}},true);
+ const previous=button('→',()=>advanceBlog(-1),'blog-arrow blog-previous');previous.setAttribute('aria-label','مقاله قبلی');previous.setAttribute('aria-controls','blog-track');
+ const next=button('←',()=>advanceBlog(1),'blog-arrow blog-next');next.setAttribute('aria-label','مقاله بعدی');next.setAttribute('aria-controls','blog-track');
+ shell.append(track,previous,next);stage.firstElementChild.append(shell);
+}
+function resize(){const viewportWidth=document.documentElement.clientWidth||innerWidth;const mode=viewportWidth<900?'mobile':'desktop';if(mode!==currentMode){currentMode=mode;layout=design.layouts[mode];stage.replaceChildren(createNode(layout,mode,document));wire();installMobileNavigation();installPageAdjustments();}const width=currentMode==='mobile'?Math.min(viewportWidth,600):Math.min(viewportWidth,1512);scale=width/layout.w;stage.style.width=width+'px';stage.style.height=((layout.h-(currentMode==='mobile'?47:0))*scale)+'px';stage.firstElementChild.style.transform=`translateY(${currentMode==='mobile'?-47*scale:0}px) scale(${scale})`;resizeFullBleed(viewportWidth,width);const nav=document.querySelector('#mobile-navigation');if(nav){nav.style.width=width+'px';nav.style.height=(78*scale)+'px';nav.firstElementChild.style.transform=`scale(${scale})`;}}
 resize();addEventListener('resize',resize);addEventListener('storage',e=>{if(e.key==='tavakoli-gold-cart'){try{const v=JSON.parse(e.newValue||'[]');if(Array.isArray(v))cart=v.filter(x=>catalogue[x.id]&&Number.isInteger(x.qty)&&x.qty>0&&x.qty<100);updateBadge();}catch{}}});
 panel.querySelector('.close').addEventListener('click',()=>panel.close());panel.addEventListener('click',e=>{if(e.target===panel){const b=panel.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)panel.close();}});
