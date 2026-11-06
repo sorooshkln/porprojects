@@ -2,5 +2,5 @@
   "name": "nardoon-landing",
   "version": "1.0.0",
   "private": true,
-  "scripts": {"dev": "python3 -m http.server 3000 --bind 0.0.0.0", "start": "python3 -m http.server 3000 --bind 0.0.0.0"}
+  "scripts": {"dev": "node scripts/live-server.mjs", "start": "node scripts/live-server.mjs"}
 }
