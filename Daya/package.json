@@ -1,0 +1,12 @@
+{
+  "name": "daya",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.19.1"
+  },
+  "scripts": {
+    "dev": "node scripts/live-server.mjs",
+    "start": "node scripts/live-server.mjs"
+  }
+}
