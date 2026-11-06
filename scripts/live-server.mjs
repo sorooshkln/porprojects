@@ -1,6 +1,5 @@
 import http from 'node:http';
-import { readFile, stat, realpath } from 'node:fs/promises';
-import { watch } from 'node:fs';
+import { readFile, stat, realpath, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -48,23 +47,48 @@ const server = http.createServer(async (req, res) => {
   } catch { res.writeHead(404).end('Not found'); }
 });
 
-let timer;
-const watcher = watch(root, { recursive: true }, (_event, name) => {
-  if (!name || !allowed(String(name).split(path.sep).join('/'))) return;
-  clearTimeout(timer);
-  timer = setTimeout(() => {
-    for (const client of clients) client.write('event: change\ndata: reload\n\n');
-  }, 150);
-});
-watcher.on('error', error => console.error('File watcher:', error.message));
+// Recursive fs.watch is unavailable on Linux with Node 18. Poll only the
+// served files so live reload also handles new directories and renamed files.
+async function snapshot() {
+  const entries = [];
+  async function scan(relative) {
+    try {
+      const filename = path.join(root, relative);
+      const info = await stat(filename);
+      if (info.isDirectory()) {
+        for (const entry of await readdir(filename, { withFileTypes: true })) {
+          if (!entry.isSymbolicLink() && !entry.name.startsWith('.')) await scan(path.join(relative, entry.name));
+        }
+      } else if (info.isFile()) entries.push(`${relative}:${info.mtimeMs}:${info.ctimeMs}:${info.size}`);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  for (const relative of ['index.html', 'style.css', 'app.js', 'assets']) await scan(relative);
+  return entries.sort().join('\n');
+}
+let signature = await snapshot();
+let polling = false;
+const poller = setInterval(async () => {
+  if (polling) return;
+  polling = true;
+  try {
+    const next = await snapshot();
+    if (next !== signature) {
+      signature = next;
+      for (const client of clients) client.write('event: change\ndata: reload\n\n');
+    }
+  } catch (error) { console.error('File polling:', error.message); }
+  finally { polling = false; }
+}, 750);
 const heartbeat = setInterval(() => { for (const client of clients) client.write(': keepalive\n\n'); }, 20000);
 server.on('error', error => {
   console.error(error.code === 'EADDRINUSE' ? `Port ${port} is in use. Stop its server or choose another PORT.` : error.message);
-  watcher.close(); clearInterval(heartbeat); process.exitCode = 1;
+  clearInterval(poller); clearInterval(heartbeat); process.exitCode = 1;
 });
 server.listen(port, '0.0.0.0', () => console.log(`Nardoon live development server: http://localhost:${port}\nWatching HTML, CSS, JavaScript and assets for automatic reload.`));
 function stop() {
-  watcher.close(); clearInterval(heartbeat); clearTimeout(timer);
+  clearInterval(poller); clearInterval(heartbeat);
   for (const client of clients) client.end();
   server.close();
 }
