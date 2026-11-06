@@ -94,6 +94,54 @@ function installMobileNavigation(){
  for(const b of [...stage.querySelectorAll('.hotspot')]){if(parseFloat(b.style.top)>=2136){b.style.top=(parseFloat(b.style.top)-2146)+'px';content.append(b);}}
  nav.append(content);document.body.append(nav);
 }
-function resize(){const mode=innerWidth<900?'mobile':'desktop';if(mode!==currentMode){currentMode=mode;layout=design.layouts[mode];stage.replaceChildren(createNode(layout,mode,document));wire();installMobileNavigation();}const width=currentMode==='mobile'?Math.min(innerWidth,600):Math.min(innerWidth,1512);scale=width/layout.w;stage.style.width=width+'px';stage.style.height=(layout.h*scale)+'px';stage.firstElementChild.style.transform=`scale(${scale})`;const nav=document.querySelector('#mobile-navigation');if(nav){nav.style.width=width+'px';nav.style.height=(78*scale)+'px';nav.firstElementChild.style.transform=`scale(${scale})`;}}
+// These sections span the viewport while product cards keep their content width.
+function installPageAdjustments(){
+ for(const id of ['11:621','11:624'])stage.querySelector(`[data-node="${id}"]`)?.remove();
+ const mobile=currentMode==='mobile';
+ stage.querySelector(`[data-node="${mobile?'11:1239':'11:529'}"]`)?.remove();
+ stage.querySelector(`[data-node="${mobile?'11:1103':'11:707'}"]`)?.remove();
+ for(const [name,kind] of [['brand','brand-band'],['best-sellers','full-bleed-background'],['divider','full-bleed-divider']]){
+  const el=document.createElement('div');el.className=`full-bleed ${kind}`;el.dataset.band=name;
+  if(name==='brand')el.setAttribute('aria-label','توکلی');else el.setAttribute('aria-hidden','true');
+  stage.append(el);
+ }
+ if(mobile){const el=document.createElement('div');el.className='full-bleed full-bleed-background';el.dataset.band='best-sellers-title';el.setAttribute('aria-hidden','true');stage.append(el);}
+}
+function resizeFullBleed(viewportWidth,contentWidth){
+ const mobile=currentMode==='mobile';
+ const dimensions={brand:mobile?[687,27]:[1296,56],'best-sellers':mobile?[1370,65]:[2396,98],divider:mobile?[1739,16]:[3512,47],'best-sellers-title':[1305,65]};
+ for(const el of stage.querySelectorAll('.full-bleed')){
+  const [y,height]=dimensions[el.dataset.band];
+  Object.assign(el.style,{left:((contentWidth-viewportWidth)/2)+'px',top:(y*scale)+'px',width:viewportWidth+'px',height:(height*scale)+'px'});
+ }
+ const brand=stage.querySelector('[data-band="brand"]');
+ const itemWidth=(mobile?76.18:158)*scale;
+ brand.style.fontSize=((mobile?7.7143:16)*scale)+'px';
+ brand.style.setProperty('--brand-item-width',itemWidth+'px');brand.style.setProperty('--brand-star-size',((mobile?6:12)*scale)+'px');
+ const repetitions=Math.ceil(viewportWidth/itemWidth)+1;
+ if(brand.children.length!==repetitions){
+  brand.replaceChildren();
+  for(let i=0;i<repetitions;i++){
+   const item=document.createElement('span');item.className='brand-item';item.setAttribute('aria-hidden','true');
+   const word=document.createElement('span');word.textContent='توکلی';
+   const star=document.createElement('span');star.className='brand-star';
+   item.append(word,star);brand.append(item);
+  }
+ }
+ const best=stage.querySelector('[data-band="best-sellers"]');
+ best.style.background=mobile?'#ece9e5':`linear-gradient(to right,#ece9e5 ${viewportWidth/2+(1034-1512/2)*scale}px,#fff 0)`;
+ const divider=stage.querySelector('[data-band="divider"]');
+ const source=find(layout,mobile?'11:1103':'11:707');
+ const tileWidth=source.w*scale,count=Math.ceil(viewportWidth/tileWidth);
+ if(divider.dataset.tileCount!==String(count)){
+  divider.replaceChildren();divider.dataset.tileCount=String(count);
+  for(let i=0;i<count;i++){
+   const tile=createNode({...source,matrix:[1,0,0,1,0,0]},`full-divider-${i}`,document);
+   tile.classList.add('divider-tile');divider.append(tile);
+  }
+ }
+ [...divider.children].forEach((tile,i)=>{tile.style.transform=`translateX(${i*tileWidth}px) scale(${scale})`;});
+}
+function resize(){const viewportWidth=document.documentElement.clientWidth||innerWidth;const mode=viewportWidth<900?'mobile':'desktop';if(mode!==currentMode){currentMode=mode;layout=design.layouts[mode];stage.replaceChildren(createNode(layout,mode,document));wire();installMobileNavigation();installPageAdjustments();}const width=currentMode==='mobile'?Math.min(viewportWidth,600):Math.min(viewportWidth,1512);scale=width/layout.w;stage.style.width=width+'px';stage.style.height=(layout.h*scale)+'px';stage.firstElementChild.style.transform=`scale(${scale})`;resizeFullBleed(viewportWidth,width);const nav=document.querySelector('#mobile-navigation');if(nav){nav.style.width=width+'px';nav.style.height=(78*scale)+'px';nav.firstElementChild.style.transform=`scale(${scale})`;}}
 resize();addEventListener('resize',resize);addEventListener('storage',e=>{if(e.key==='tavakoli-gold-cart'){try{const v=JSON.parse(e.newValue||'[]');if(Array.isArray(v))cart=v.filter(x=>catalogue[x.id]&&Number.isInteger(x.qty)&&x.qty>0&&x.qty<100);updateBadge();}catch{}}});
 panel.querySelector('.close').addEventListener('click',()=>panel.close());panel.addEventListener('click',e=>{if(e.target===panel){const b=panel.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)panel.close();}});
