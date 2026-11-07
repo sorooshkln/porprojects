@@ -1,8 +1,13 @@
+@font-face{font-family:'AbarLowFaNum';src:url(fonts/AbarLowFaNum-Regular.ttf) format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'AbarLowFaNum';src:url(fonts/AbarLowFaNum-SemiBold.ttf) format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'AbarLowFaNum';src:url(fonts/AbarLowFaNum-Bold.ttf) format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'AbarLowFaNum';src:url(fonts/AbarLowFaNum-ExtraBold.ttf) format('truetype');font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:'AbarLowFaNum';src:url(fonts/AbarLowFaNum-Black.ttf) format('truetype');font-weight:900;font-style:normal;font-display:swap}
 /* jeawas — built from the "Daya Sample" Figma frames: Landing (1512) and Landing | Mobile (393) */
 :root{
   --red:#CC312D; --ink:#1A1814; --mut:#606060; --line:#EBEBEB; --soft:#F7F7F7;
   --brown:#2F0D0C; --navy:#13193A; --pink:#FFF4F8; --orange:#F58220; --green:#29B677;
-  --font:'estedad-fd',ui-sans-serif,system-ui,Tahoma,sans-serif;
+  --font:'AbarLowFaNum',ui-sans-serif,system-ui,Tahoma,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
