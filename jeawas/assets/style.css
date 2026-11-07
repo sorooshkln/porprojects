@@ -167,10 +167,9 @@ b,strong{font-weight:inherit}
 .sale .sl-btn{top:182px}
 
 /* ---------- scents ---------- */
-.scents{position:relative;margin-top:100px;height:257px;overflow:hidden}
-.scents::before{content:"";position:absolute;left:0;top:57px;width:215px;height:200px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));z-index:2;pointer-events:none}
-.scents .ttl{height:41px;padding-top:9px;align-items:flex-start}
-.scents-row{position:absolute;left:50%;top:89px;width:1854px;transform:translateX(-50%);display:flex;gap:24px;direction:rtl}
+.scents{margin-top:100px}
+.scents .ttl{height:32px}
+.scents-row{width:min(1312px,100% - 48px);margin:48px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
 .scent{position:relative;flex:none;width:289px;height:120px;border:1px solid var(--line);border-radius:20px;display:flex;align-items:center;gap:0;padding:0}
 .scent-img{position:relative;display:grid;place-items:center;width:88px;height:88px;margin:0 29px 0 0;flex:none}
 .scent-img img{position:relative;width:68px;height:68px;object-fit:contain;z-index:1}
@@ -180,7 +179,7 @@ b,strong{font-weight:inherit}
 .scent-tx b{font-size:18px;font-weight:700;line-height:32px;color:#000;text-align:right}
 .scent-n{display:flex;align-items:center;gap:10px;line-height:25px}
 .scent-n em{font-style:normal;font-size:14px;font-weight:600;color:var(--mut);white-space:nowrap}
-.dots--m{display:none}
+
 
 /* ---------- best sellers ---------- */
 .sec-best{margin-top:100px}
@@ -321,20 +320,16 @@ b,strong{font-weight:inherit}
   .sale .pc{background:#fff}
   .sale .m-all{margin-top:24px}
 
-  .scents{margin-top:54px;height:auto;overflow:visible;padding:0}
-  .scents::before{display:none}
+  .scents{margin-top:54px}
   .scents .ttl{height:32px;width:calc(100% - 48px);max-width:345px;margin:0 auto;align-items:center}
-  .scents-row{position:static;transform:none;width:auto;margin-top:32px;padding:0 24px;overflow-x:auto;scrollbar-width:none;gap:12px;scroll-snap-type:x mandatory}
-  .scents-row::-webkit-scrollbar{display:none}
-  .scent{height:96px;border-radius:20px;scroll-snap-align:center}
+  .scents-row{max-width:345px;margin-top:32px;gap:12px}
+  .scent{flex:1 1 289px;height:96px;border-radius:20px}
   .scent-img{width:72px;height:72px;margin:0 16px 0 0}
   .scent-img img{width:52px;height:52px}
   .scent-img i{width:40px}
   .scent-tx{width:173px;margin:0 16px 0 0;gap:5px}
   .scent-tx b{font-size:12px;font-weight:600;color:var(--mut);line-height:29px}
-    .dots--m{display:block;width:96px;margin-top:24px}
-  .dots--m i{width:40px;right:2px}
-
+  
   .sec-best{margin-top:54px}
   .sec-best .sec-hd{flex-direction:column;align-items:center;height:104px;gap:16px}
   .sec-best .sec-t{text-align:center}
